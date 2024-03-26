@@ -13,7 +13,7 @@ class SampleApp(CTk):
     def __init__(self):
         CTk.__init__(self)
         self._frame = None
-
+        # print("hello")
         self.geometry("600x480") 
         self.switch_frame(LoginPage)
         self.resizable(0,0)
