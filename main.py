@@ -6,8 +6,10 @@ from  CTkMessagebox import CTkMessagebox
 from StartPageAdmin_baj import StartPageAdmin
 
 set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-set_default_color_theme("blue.json")  # Themes: "blue" (standard), "green", "dark-blue"
+set_default_color_theme("blue.json")
+# Themes: "blue" (standard), "green", "dark-blue"
 class SampleApp(CTk):
+
     def __init__(self):
         CTk.__init__(self)
         self._frame = None
