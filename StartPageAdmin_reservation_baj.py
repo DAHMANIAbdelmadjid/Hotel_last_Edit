@@ -11,8 +11,8 @@ import StartPageAdmin_invoice_baj as sai
 import StartPageAdmin_Service_baj as sas
 import StartPageAdmin_use_baj as sau
 
-
-set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+from mode_mode import new_mode
+set_appearance_mode(f"{new_mode}")  # Modes: "System" (standard), "Dark", "Light"
 set_default_color_theme("blue.json")  # Themes: "blue" (standard), "green", "dark-blue"
 
 class StartPageAdmin_reservation(CTkFrame):
@@ -97,13 +97,13 @@ class StartPageAdmin_reservation(CTkFrame):
             
         
     def change_appearance_mode_event(self):
-        new_mode=get_appearance_mode()
+        global new_mode
         if new_mode=="Light":
-            # LoginPage.newMode("Dark")
-            set_appearance_mode("Dark")
+            new_mode="Dark"
+            set_appearance_mode(f"{new_mode}")
         else:
-            set_appearance_mode("Light")
-            # LoginPage.newMode("Light")
+            new_mode="Light"
+            set_appearance_mode(f"{new_mode}")
 
     def to_Room(self):
         self.master.switch_frame(sa.StartPageAdmin)
@@ -155,7 +155,6 @@ class ToplevelWindow_(CTkToplevel):
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
-        set_appearance_mode("light")
 # [["Title","Service ID", "Author", "Publisher", "category"],]
         self.title = CTkEntry(
             master=self,
@@ -243,7 +242,6 @@ class ToplevelWindowDel_(CTkToplevel):
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
 
-        set_appearance_mode("light")
 
         self.title = CTkEntry(
             master=self,
@@ -290,7 +288,6 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
-        set_appearance_mode("light")
 
         self.title = CTkEntry(
             master=self,

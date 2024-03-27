@@ -4,8 +4,8 @@ from customtkinter import *
 from PIL import Image
 from  CTkMessagebox import CTkMessagebox
 from StartPageAdmin_baj import StartPageAdmin
-
-set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+from mode_mode import *
+set_appearance_mode(f"{new_mode}")  # Modes: "System" (standard), "Dark", "Light"
 set_default_color_theme("blue.json")
 # Themes: "blue" (standard), "green", "dark-blue"
 class SampleApp(CTk):
