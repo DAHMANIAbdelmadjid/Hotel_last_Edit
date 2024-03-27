@@ -80,7 +80,7 @@ class StartPageAdmin_reservation(CTkFrame):
     
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
         # connection=create_connection()
-        self.table_data=[["Resecation ID","Check in", "Check out", "Payment", "Discount","Client ID","Room number"],
+        self.table_data=[["Reservation ID","Check in", "Check out", "Payment", "Discount","Client ID","Room number"],
          [1,2,3,4,5,6,7],
          [1,2,3,4,5,6,7],
          [1,2,3,4,5,6,7],
