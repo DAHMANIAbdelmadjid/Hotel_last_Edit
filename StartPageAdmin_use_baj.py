@@ -265,7 +265,7 @@ class ToplevelWindowDel(CTkToplevel):
 
         Button = CTkButton(
             master=self,
-            text="Delet",
+            text="Delete",
             font=("Arial Black", 15),
             text_color="white",
             hover=True,
@@ -284,11 +284,11 @@ class ToplevelWindowDel(CTkToplevel):
 
     def user_del(self):
         pass
-        # self.texit = self.title.get()
-        # connection=create_connection()
-        # delete_user(connection,self.texit)
-        # self.destroy()
-        # self.master.switch_frame(StartPageAdmin_use)
+        self.texit = self.title.get()
+        connection=create_connection()
+        delete_user(connection,self.texit)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_use)
 
 
 class ToplevelWindowUp(CTkToplevel):
