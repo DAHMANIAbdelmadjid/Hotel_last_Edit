@@ -1,6 +1,7 @@
 from customtkinter import *
 from CTkTable import CTkTable
-from PIL import Image  # from date_li_user import *
+from PIL import Image  #
+from date_li_user import *
 from CTkXYFrame import *
 import os
 import StartPageAdmin_baj as sa
@@ -43,7 +44,7 @@ class StartPageAdmin_use(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
 
-        CTkButton(master=self.sidebar_frame, text="Servise", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Services", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_servise).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20, 20))
@@ -52,7 +53,7 @@ class StartPageAdmin_use(CTkFrame):
                   command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20, 20))
-        CTkButton(master=self.sidebar_frame, text="Reservation", image=button_image, font=("Arial Bold", 14),
+        CTkButton(master=self.sidebar_frame, text="Reservations", image=button_image, font=("Arial Bold", 14),
                   anchor="w", command=self.to_reservation).pack(anchor="center", padx=5, pady=(16, 0))
 
         self.sidebar_frame.pack(anchor="w", side="left", fill="y", expand=True)
@@ -69,22 +70,22 @@ class StartPageAdmin_use(CTkFrame):
             anchor="ne", side="right")
         CTkButton(master=self.title_frame, text="Delete User", font=("Arial Black", 15),
                   command=self.open_toplevelDel).pack(anchor="ne", side="right", padx=12)
-        CTkButton(master=self.title_frame, text="Updat User", font=("Arial Black", 15),
+        CTkButton(master=self.title_frame, text="Update User", font=("Arial Black", 15),
                   command=self.open_toplevelUp).pack(anchor="ne", side="right", padx=8)
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
-        self.entry = CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search Book")
+        self.entry = CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search for a user")
         self.entry.pack(side="left", padx=(13, 0), pady=15)
         self.text = self.entry.get()
         print(self.text)
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15), command=self.to_search).pack(
             anchor="ne", padx=13, pady=15)
         # connection=create_connection()
-        self.table_data = [["Title", "Room ID", "Author", "Publisher", "category"],
-                           [1, 2, 3, 4, 5],
-                           [1, 2, 3, 4, 5],
-                           [1, 2, 3, 4, 5],
-                           [1, 2, 3, 4, 5]]
+        self.table_data = [["User Id", "Identification number", "Name", "Phone number"],
+                           [1, 2, 3, 4],
+                           [1, 2, 3, 4],
+                           [1, 2, 3, 4],
+                           [1, 2, 3, 4]]
         self.table_frame = CTkXYFrame(master=self.main_view)
         self.table_frame.pack(expand=True, fill="both", padx=27, pady=21)
         self.table = CTkTable(master=self.table_frame,

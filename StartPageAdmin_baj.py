@@ -50,7 +50,7 @@ class StartPageAdmin(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20,20))
 
-        CTkButton(master=self.sidebar_frame, text="Servise", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_servise).pack(anchor="center", padx=5, pady=(16, 0))
+        CTkButton(master=self.sidebar_frame, text="Services", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_servise).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20,20))
 
@@ -58,7 +58,7 @@ class StartPageAdmin(CTkFrame):
         CTkButton(master=self.sidebar_frame, text="Invoice", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20,20))
-        CTkButton(master=self.sidebar_frame, text="Reservation", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_reservation).pack(anchor="center", padx=5, pady=(16, 0))
+        CTkButton(master=self.sidebar_frame, text="Reservations", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_reservation).pack(anchor="center", padx=5, pady=(16, 0))
 
 
 
@@ -75,16 +75,16 @@ class StartPageAdmin(CTkFrame):
         CTkLabel(master=self.title_frame, text="Rooms", font=("Arial Black", 25)).pack(anchor="nw", side="left")
         CTkButton(master=self.title_frame, text="New Room", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
         CTkButton(master=self.title_frame, text="Delete Room", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
-        CTkButton(master=self.title_frame, text="Updat Room", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
+        CTkButton(master=self.title_frame, text="Update Room", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
-        self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search Room")
+        self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search for a room")
         self.entry.pack(side="left", padx=(13, 0), pady=15)
     
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
         # connection=create_connection()
-        self.table_data=[["Title","Room ID", "Author", "Publisher", "category"],
+        self.table_data=[["Room ID","Type", "Price", "Status", "Discount"],
          [1,2,3,4,5],
          [1,2,3,4,5],
          [1,2,3,4,5],

@@ -7,9 +7,9 @@ def create_connection():
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            database='library',
+            database='hotel',
             user='root',
-            password='1234'
+            password=''
         )
         if connection.is_connected():
             print("Connected to MySQL database")
@@ -23,7 +23,7 @@ def close_connection(connection):
         connection.close()
         print("Connection closed")
 
-def insert_borrow(connection, *values):
+def insert_reserv(connection, *values):
     current_date = datetime.now().date()
     new_date = current_date + timedelta(days=15)
     try:
@@ -35,35 +35,35 @@ def insert_borrow(connection, *values):
     except Error as e:
         print(f"Error: {e}")
 
-def select_all_borrows(connection):
+def select_all_reserv(connection):
     try:
         cursor = connection.cursor()
         query = """
             SELECT
-                prets.NumeroMatricule ,
-                abonnes.Nom ,
-                prets.CodeCatalogue,
-                livres.Titre,
-                prets.Cote,
-                prets.DatePret,
-                prets.DateRetourPrevu
+                reservation.res_id ,
+                reservation.check_in ,
+                reservation.check_out,
+                reservation.payment,
+                client.c_id,
+                client.c_name,
+                room.room_num,
             FROM
-                prets 
+                reservation 
             JOIN
-                abonnes  ON prets.NumeroMatricule = abonnes.NumeroMatricule
+                client  ON reservation.c_id = client.c_id
             JOIN
-                livres ON prets.CodeCatalogue = livres.CodeCatalogue;
+                room ON reservation.room_num = room.room_num;
         """
         cursor.execute(query)
-        borrows = cursor.fetchall()
+        reservs = cursor.fetchall()
         close_connection(connection)
 
-        borrow1 = [
-            ["User ID", "User", "Book ID", "Book", "CodeCatalogue", "DatePret", "DateRetourPrevu"],
+        reserv1 = [
+            ["Reservation ID", "Check in", "Check out", "Payment", "Client ID", "Client name", "Room number"],
         ]
-        for borrow in borrows:
-            borrow1.append(list(borrow))
-        return borrow1
+        for reserv in reservs:
+            reserv1.append(list(reserv))
+        return reserv1
     except Error as e:
         print(f"Error: {e}")
 
@@ -78,7 +78,7 @@ def delete_borrow(connection, code_catalogue):
     except Error as e:
         print(f"Error: {e}")
 
-def search_borrow(connection, title):
+def search_reserv(connection, title):
     if title == "":
         return None
 

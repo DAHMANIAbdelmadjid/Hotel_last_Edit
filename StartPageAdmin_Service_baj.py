@@ -41,7 +41,7 @@ class StartPageAdmin_Servise(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
 
-        CTkButton(master=self.sidebar_frame, text="Servise", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Services", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_servise).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20, 20))
@@ -50,7 +50,7 @@ class StartPageAdmin_Servise(CTkFrame):
                   command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20, 20))
-        CTkButton(master=self.sidebar_frame, text="Reservation", image=button_image, font=("Arial Bold", 14),
+        CTkButton(master=self.sidebar_frame, text="Reservations", image=button_image, font=("Arial Bold", 14),
                   anchor="w", command=self.to_reservation).pack(anchor="center", padx=5, pady=(16, 0))
 
         self.sidebar_frame.pack(anchor="w", side="left", fill="y", expand=True)
@@ -68,23 +68,23 @@ class StartPageAdmin_Servise(CTkFrame):
         self.title_frame = CTkFrame(master=self.main_view, fg_color="transparent")
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
-        CTkLabel(master=self.title_frame, text="Servise", font=("Arial Black", 25)).pack(anchor="nw", side="left")
+        CTkLabel(master=self.title_frame, text="Service", font=("Arial Black", 25)).pack(anchor="nw", side="left")
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
         
         CTkButton(master=self.title_frame, text="Servise Book", font=("Arial Black", 15),command=self.Servise_Book).pack(anchor="ne", side="right",padx=12)
 
-        self.Search_Entry=CTkEntry(master=self.search_container, width=305 , border_width=2, placeholder_text="Search Book")
+        self.Search_Entry=CTkEntry(master=self.search_container, width=305 , border_width=2, placeholder_text="Search for a service")
         self.Search_Entry.pack(side="left", padx=(13, 0), pady=15)
 
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
         # connection=create_connection()
-        self.table_data=[["Title","Room ID", "Author", "Publisher", "category"],
-         [1,2,3,4,5],
-         [1,2,3,4,5],
-         [1,2,3,4,5],
-         [1,2,3,4,5]]
+        self.table_data=[["Service ID","Description", "Price", "Discount"],
+         [1,2,3,4],
+         [1,2,3,4],
+         [1,2,3,4],
+         [1,2,3,4]]
         self.table_frame = CTkXYFrame(master=self.main_view)
         self.table_frame.pack(expand=True, fill="both", padx=27, pady=21)
         self.table = CTkTable(master=self.table_frame, values=self.table_data)#, header_color="#765827", hover_color="#B4B4B4")
