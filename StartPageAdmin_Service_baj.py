@@ -9,7 +9,8 @@ import StartPageAdmin_reservation_baj as sar
 import StartPageAdmin_use_baj as sau
 
 from  CTkMessagebox import CTkMessagebox
-set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+from mode_mode import new_mode
+set_appearance_mode(f"{new_mode}")
 set_default_color_theme("blue.json")  # Themes: "blue" (standard), "green", "dark-blue"
 
 class StartPageAdmin_Servise(CTkFrame):
@@ -18,7 +19,6 @@ class StartPageAdmin_Servise(CTkFrame):
         master.pack_propagate(0)
         master.geometry("856x645") 
         master.resizable(0,0)
-        set_appearance_mode("light")
 
         self.sidebar_frame = CTkFrame(master=self, width=176, height=650, corner_radius=0)
         self.sidebar_frame.pack_propagate(0)
@@ -93,14 +93,15 @@ class StartPageAdmin_Servise(CTkFrame):
         self.table.pack(expand=True)
         self.main_view.pack(side="left", fill="both", expand=True)
         self.toplevel_window = None
+
     def change_appearance_mode_event(self):
-        new_mode=get_appearance_mode()
-        if new_mode=="Light":
-            # LoginPage.newMode("Dark")
-            set_appearance_mode("Dark")
+        global new_mode
+        if new_mode == "Light":
+            new_mode = "Dark"
+            set_appearance_mode(f"{new_mode}")
         else:
-            set_appearance_mode("Light")
-            # LoginPage.newMode("Light")
+            new_mode = "Light"
+            set_appearance_mode(f"{new_mode}")
 
     def to_Room(self):
         self.master.switch_frame(sa.StartPageAdmin)
@@ -151,7 +152,6 @@ class ToplevelWindowBor_boo(CTkToplevel):
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
 
-        set_appearance_mode("light")
 
         self.title = CTkEntry(
             master=self,
