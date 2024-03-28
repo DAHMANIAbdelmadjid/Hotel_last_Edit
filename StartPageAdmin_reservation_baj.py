@@ -2,7 +2,10 @@ from tkinter import messagebox
 from customtkinter import *
 from CTkTable import CTkTable
 from PIL import Image
-# from date_li import *
+from datetime import datetime
+from StartPageAdmin_baj import *
+import date_li_borrow
+from date_li_borrow import *
 from CTkXYFrame import *
 from  CTkMessagebox import CTkMessagebox
 
@@ -79,12 +82,8 @@ class StartPageAdmin_reservation(CTkFrame):
         self.entry.pack(side="left", padx=(13, 0), pady=15)
     
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
-        # connection=create_connection()
-        self.table_data=[["Reservation ID","Check in", "Check out", "Payment", "Discount","Client ID","Room number"],
-         [1,2,3,4,5,6,7],
-         [1,2,3,4,5,6,7],
-         [1,2,3,4,5,6,7],
-         [1,2,3,4,5,6,7]]
+        connection=create_connection()
+        self.table_data=date_li_borrow.select_all_reserv(connection)
         self.table_frame = CTkXYFrame(master=self.main_view)
         self.table_frame.pack(expand=True, fill="both", padx=27, pady=21)
         self.table = CTkTable(master=self.table_frame, values=self.table_data)
@@ -159,42 +158,42 @@ class ToplevelWindow_(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Title',
+            placeholder_text='Check out',
             width= 200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Author',
+            placeholder_text='Client ID',
             width= 200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
 
-            placeholder_text='Publisher',
+            placeholder_text='Room number',
             width= 200,
             height=35,
         )
-        self.kentry3 = CTkEntry(
-            master=self,
+        #self.kentry3 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='category',
-            width= 200,
-            height=35,
-        )
-        self.kentry4 = CTkEntry(
-            master=self,
+        #    placeholder_text='category',
+        #    width= 200,
+        #   height=35,
+        #)
+        #self.kentry4 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='ID',
-            width= 200,
-            height=35,
-        )
+        #   placeholder_text='ID',
+        #    width= 200,
+        #    height=35,
+        #)
 
         button = CTkButton(
             master=self,
-            text="New",
+            text="Add",
             font=("Arial Black", 15),
             text_color="white",
             hover= True,
@@ -212,23 +211,23 @@ class ToplevelWindow_(CTkToplevel):
         self.title.place(x= 18, y= 20)
         self.kentry1.place(x= 236, y= 20)
         self.kentry2.place(x= 18, y=65 )
-        self.kentry3.place(x= 236, y=65 )
-        self.kentry4.place(x= 18, y=110 )
+        #self.kentry3.place(x= 236, y=65 )
+        #self.kentry4.place(x= 18, y=110 )
 
         button.place(x= 236, y= 110)
 
     def Service_NEW(self):
         pass
             
-    #     self.texit = self.title.get()
-    #     self.texit1 = self.kentry1.get()
-    #     self.texit2 = self.kentry2.get()
+        self.texit = self.title.get()
+        self.texit1 = self.kentry1.get()
+        self.texit2 = self.kentry2.get()
     #     self.texit3 = self.kentry3.get()
     #     self.texit4 = int(self.kentry4.get())
-    #     connection=create_connection()
-    #     insert_book(connection,self.texit4,self.texit,self.texit1,self.texit2,self.texit3)
-    #     self.destroy()
-    #     self.master.switch_frame(StartPageAdmin)
+        connection=create_connection()
+        insert_reserv(connection,self.texit,self.texit1,self.texit2)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_reservation)
 
 
 class ToplevelWindowDel_(CTkToplevel):
@@ -254,7 +253,7 @@ class ToplevelWindowDel_(CTkToplevel):
 
         Button = CTkButton(
             master=self,
-            text="Delet",
+            text="Delete",
             font=("Arial Black", 15),
             text_color="white",
             hover= True,
@@ -273,11 +272,11 @@ class ToplevelWindowDel_(CTkToplevel):
         Button.place(x= 236, y= 20)
     def user_del(self):
         pass
-    #     self.texit = self.title.get()
-    #     connection=create_connection()
-    #     delete_book(connection,self.texit)
-    #     self.destroy()
-    #     self.master.switch_frame(StartPageAdmin)
+        self.texit = self.title.get()
+        connection=create_connection()
+        delete_reserv(connection,self.texit)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_reservation)
 class ToplevelWindowUp_(CTkToplevel,):
 
     def __init__(self,master, *args, **kwargs):
