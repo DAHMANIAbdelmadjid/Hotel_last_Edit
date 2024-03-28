@@ -56,7 +56,7 @@ class StartPageAdmin(CTkFrame):
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20,20))
 
 
-        CTkButton(master=self.sidebar_frame, text="Invoice", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
+        CTkButton(master=self.sidebar_frame, text="Consumptions", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20,20))
         CTkButton(master=self.sidebar_frame, text="Reservations", image=button_image, font=("Arial Bold", 14), anchor="w",command=self.to_reservation).pack(anchor="center", padx=5, pady=(16, 0))

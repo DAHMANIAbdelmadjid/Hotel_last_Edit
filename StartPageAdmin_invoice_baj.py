@@ -52,7 +52,7 @@ class StartPageAdmin_invoice(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20, 20))
 
-        CTkButton(master=self.sidebar_frame, text="Invoice", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Consumptions", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20, 20))
@@ -68,10 +68,10 @@ class StartPageAdmin_invoice(CTkFrame):
         self.title_frame = CTkFrame(master=self.main_view)
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
-        CTkLabel(master=self.title_frame, text="Invoices", font=("Arial Black", 25)).pack(anchor="nw", side="left")
-        CTkButton(master=self.title_frame, text="New Invoice", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
-        CTkButton(master=self.title_frame, text="Delete Invoice", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
-        CTkButton(master=self.title_frame, text="Updat Invoice", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
+        CTkLabel(master=self.title_frame, text="Consumptions", font=("Arial Black", 25)).pack(anchor="nw", side="left")
+        CTkButton(master=self.title_frame, text="New consumption", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
+        CTkButton(master=self.title_frame, text="Delete consumption", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
+        CTkButton(master=self.title_frame, text="Update consumption", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
