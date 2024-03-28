@@ -28,7 +28,7 @@ def close_connection(connection):
 def insert_client(connection, *values):
     try:
         cursor = connection.cursor()
-        query = "INSERT INTO client (iden_num ,name ,c_ph_number) VALUES (%s, %s, %s)"
+        query = "INSERT INTO client (iden_num ,c_name ,c_ph_numer) VALUES (%s, %s, %s)"
         cursor.execute(query, values)
         connection.commit()
         print("user inserted successfully")
@@ -37,7 +37,7 @@ def insert_client(connection, *values):
     close_connection(connection)
 
 
-def select_all_user(connection):
+def select_all_clients(connection):
     try:
         cursor = connection.cursor()
         query = "SELECT * FROM client"
@@ -53,7 +53,7 @@ def select_all_user(connection):
     close_connection(connection)
 
 
-def update_user(connection, c_id, *new_values):
+def update_client(connection, c_id, *new_values):
     try:
         cursor = connection.cursor()
         query = "UPDATE client SET iden_num=%s, c_name=%s, c_ph_numer=%s WHERE c_id=%s"
@@ -87,7 +87,7 @@ def delete_user(connection, c_id):
     close_connection(connection)
 
 
-def search_user(connection, name):
+def search_client(connection, name):
     if not name:
         return None
     try:

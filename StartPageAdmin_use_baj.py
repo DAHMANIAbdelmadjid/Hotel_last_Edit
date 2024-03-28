@@ -1,6 +1,8 @@
 from customtkinter import *
 from CTkTable import CTkTable
 from PIL import Image  #
+
+import date_li_user
 from date_li_user import *
 from CTkXYFrame import *
 import os
@@ -80,12 +82,8 @@ class StartPageAdmin_use(CTkFrame):
         print(self.text)
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15), command=self.to_search).pack(
             anchor="ne", padx=13, pady=15)
-        # connection=create_connection()
-        self.table_data = [["User Id", "Identification number", "Name", "Phone number"],
-                           [1, 2, 3, 4],
-                           [1, 2, 3, 4],
-                           [1, 2, 3, 4],
-                           [1, 2, 3, 4]]
+        connection=create_connection()
+        self.table_data = date_li_user.select_all_clients(connection)
         self.table_frame = CTkXYFrame(master=self.main_view)
         self.table_frame.pack(expand=True, fill="both", padx=27, pady=21)
         self.table = CTkTable(master=self.table_frame,
@@ -140,17 +138,15 @@ class StartPageAdmin_use(CTkFrame):
 
     def to_search(self):
         pass
-
-
-#         connection=create_connection()
-#         self.tab=self.entry.get()
-#         self.args=search_user(connection,self.tab)
-#         self.args2=select_all_user(connection)
-#         index=[]
-#         for value in  self.args2:
-#             if not value in  self.args:
-#                 index.append( self.args2.index(value))
-#         self.table.delete_rows(index)
+        connection=create_connection()
+        self.tab=self.entry.get()
+        self.args=search_client(connection,self.tab)
+        self.args2=select_all_clients(connection)
+        index=[]
+        for value in  self.args2:
+            if not value in  self.args:
+               index.append( self.args2.index(value))
+        self.table.delete_rows(index)
 class ToplevelWindow(CTkToplevel):
 
     def __init__(self, master, *args, **kwargs):
@@ -165,35 +161,34 @@ class ToplevelWindow(CTkToplevel):
 
         self.title = CTkEntry(
             master=self,
+            placeholder_text='Identification number',
+            width=200,
+            height=35,
+        )
+        #self.kentry1 = CTkEntry(
+        #    master=self,
 
+        #    placeholder_text='Name',
+        #    width=200,
+        #    height=35,
+        #)
+        self.kentry2 = CTkEntry(
+            master=self,
             placeholder_text='Name',
             width=200,
             height=35,
         )
-        self.kentry1 = CTkEntry(
-            master=self,
+        #self.kentry3 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='First name',
-            width=200,
-            height=35,
-        )
-        self.kentry2 = CTkEntry(
-            master=self,
-            placeholder_text='Date of birth',
-            width=200,
-            height=35,
-        )
-        self.kentry3 = CTkEntry(
-            master=self,
-
-            placeholder_text='Email',
-            width=200,
-            height=35,
-        )
+        #    placeholder_text='Email',
+        #    width=200,
+        #    height=35,
+        #)
         self.kentry4 = CTkEntry(
             master=self,
 
-            placeholder_text='ID',
+            placeholder_text='Phone number',
             width=200,
             height=35,
         )
@@ -221,9 +216,9 @@ class ToplevelWindow(CTkToplevel):
 
         )
         self.title.place(x=18, y=20)
-        self.kentry1.place(x=236, y=20)
+        #self.kentry1.place(x=236, y=20)
         self.kentry2.place(x=18, y=65)
-        self.kentry3.place(x=236, y=65)
+        #self.kentry3.place(x=236, y=65)
         self.kentry4.place(x=18, y=110)
 
         button.place(x=236, y=110)
@@ -231,15 +226,15 @@ class ToplevelWindow(CTkToplevel):
     def user_NEW(self):
         pass
 
-        # self.texit = self.title.get()
+        self.texit = self.title.get()
         # self.texit1 = self.kentry1.get()
-        # self.texit2 = self.kentry2.get()
+        self.texit2 = self.kentry2.get()
         # self.texit3 = self.kentry3.get()
-        # self.texit4 = int(self.kentry4.get())
-        # connection=create_connection()
-        # insert_user(connection,self.texit4,self.texit,self.texit1,self.texit2,self.texit3)
-        # self.destroy()
-        # self.master.switch_frame(StartPageAdmin_use)
+        self.texit4 = int(self.kentry4.get())
+        connection=create_connection()
+        insert_client(connection,self.texit,self.texit2,self.texit4)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_use)
 
 
 class ToplevelWindowDel(CTkToplevel):
@@ -305,38 +300,38 @@ class ToplevelWindowUp(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Name',
+            placeholder_text='Client ID',
             width=200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='First name',
+            placeholder_text='Identification number',
             width=200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
 
-            placeholder_text='Date of birth',
+            placeholder_text='Name',
             width=200,
             height=35,
         )
         self.kentry3 = CTkEntry(
             master=self,
 
-            placeholder_text='Email',
+            placeholder_text='Phone number',
             width=200,
             height=35,
         )
-        self.kentry4 = CTkEntry(
-            master=self,
+        #self.kentry4 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='ID',
-            width=200,
-            height=35,
-        )
+        #    placeholder_text='ID',
+        #    width=200,
+        #    height=35,
+        #)
         # exitPath = CTkEntry(
         #     master=self,
         #     border_color=765827",
@@ -364,19 +359,19 @@ class ToplevelWindowUp(CTkToplevel):
         self.kentry1.place(x=236, y=20)
         self.kentry2.place(x=18, y=65)
         self.kentry3.place(x=236, y=65)
-        self.kentry4.place(x=18, y=110)
+        #self.kentry4.place(x=18, y=110)
 
         button.place(x=236, y=110)
 
     def user_NEW(self):
         pass
 
-        # self.texit = self.title.get()
-        # self.texit1 = self.kentry1.get()
-        # self.texit2 = self.kentry2.get()
-        # self.texit3 = self.kentry3.get()
-        # self.texit4 = int(self.kentry4.get())
-        # connection=create_connection()
-        # update_user(connection,self.texit4,self.texit,self.tcexit1,self.texit2,self.texit3)
-        # self.destroy()
-        # self.master.switch_frame(StartPageAdmin_use)
+        self.texit = self.title.get()
+        self.texit1 = self.kentry1.get()
+        self.texit2 = self.kentry2.get()
+        self.texit3 = self.kentry3.get()
+        #self.texit4 = int(self.kentry4.get())
+        connection=create_connection()
+        update_client(connection,self.texit,self.texit1,self.texit2,self.texit3)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_use)

@@ -28,7 +28,7 @@ def close_connection(connection):
 def insert_room(connection, *values):
     try:
         cursor = connection.cursor()
-        query = "INSERT INTO room (room_num, type, price, stat, discount) VALUES (%s, %s, %s, %s, %s)"
+        query = "INSERT INTO room (type, price, stat, discount) VALUES (%s, %s, %s, %s)"
         cursor.execute(query, values)
         connection.commit()
         print("user inserted successfully")
