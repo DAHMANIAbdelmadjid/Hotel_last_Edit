@@ -70,7 +70,7 @@ class StartPageAdmin_Servise(CTkFrame):
         self.title_frame = CTkFrame(master=self.main_view, fg_color="transparent")
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
-        CTkLabel(master=self.title_frame, text="Service", font=("Arial Black", 25)).pack(anchor="nw", side="left")
+        CTkLabel(master=self.title_frame, text="Services", font=("Arial Black", 25)).pack(anchor="nw", side="left")
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
