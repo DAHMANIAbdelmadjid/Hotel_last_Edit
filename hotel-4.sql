@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2024 at 01:03 AM
+-- Generation Time: Mar 29, 2024 at 09:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotel`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_id` int(20) NOT NULL,
+  `admin_name` varchar(60) NOT NULL,
+  `admin_psw` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `admin_name`, `admin_psw`) VALUES
+(1, 'Djihane', 'ireneadler'),
+(2, 'Madjid', 'geniusgenius');
 
 -- --------------------------------------------------------
 
@@ -55,6 +75,13 @@ CREATE TABLE `consumption` (
   `ser_id` int(20) DEFAULT NULL,
   `c_id` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `consumption`
+--
+
+INSERT INTO `consumption` (`cons_id`, `cnt`, `ser_id`, `c_id`) VALUES
+(2, 3, 2, 8);
 
 -- --------------------------------------------------------
 
@@ -129,6 +156,12 @@ INSERT INTO `service` (`ser_id`, `descp`, `ser_price`, `ser_discount`) VALUES
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
@@ -168,6 +201,12 @@ ALTER TABLE `service`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
@@ -177,7 +216,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT for table `consumption`
 --
 ALTER TABLE `consumption`
-  MODIFY `cons_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `cons_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `reservation`

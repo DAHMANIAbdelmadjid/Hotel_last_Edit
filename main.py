@@ -72,28 +72,22 @@ class LoginPage(CTkFrame):
     def check_login(self,event):
             username = self.username_entry.get()
             password = self.password_entry.get()
-            #connection=create_connection()
-            user=[["Title","Room ID", "Author", "Publisher", "category"],
-         [1,2,3,4,5],
-         [1,2,3,4,5],
-         [1,2,3,4,5],
-         [1,2,3,4,5]]
-            f=0
-            for i in user :
-                
-                if username == i[-1] and password== i[0] and( i[1]in [1,2,3]):
-                    f=1
+            connection=create_connection()
+            cursor = connection.cursor()
+            cursor.execute("SELECT admin_name, admin_psw FROM admin")
+            admins = cursor.fetchall()
+
+            f = 0
+            for admin in admins:
+                if username == admin[0] and password == admin[1]:
+                    f = 1
                     self.master.switch_frame(StartPageAdmin)
                     break
-           
-                if username =="1":
-                    f=1
-                    self.master.switch_frame(StartPageAdmin)
-                    break    
 
-            
-            if f==0:
+            if f == 0:
                 messagebox.showerror("Error", "Invalid username or password")
+
+            connection.close()
 
 
 if __name__ == "__main__":
