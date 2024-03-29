@@ -49,7 +49,7 @@ class LoginPage(CTkFrame):
         frame.pack(expand=True, side="right")
             
         
-        CTkLabel(master=frame, text="welcome Back to!", anchor="w", justify="left", font=("Arial Bold", 24)).pack(anchor="w", pady=(50, 5), padx=(25, 0))
+        CTkLabel(master=frame, text="Welcome Back !", anchor="w", justify="left", font=("Arial Bold", 24)).pack(anchor="w", pady=(50, 5), padx=(25, 0))
         CTkLabel(master=frame, text="Sign in to your account", anchor="w", justify="left", font=("Arial Bold", 12)).pack(anchor="w", padx=(25, 0))
 
         CTkLabel(master=frame, text="  Email :", anchor="w", justify="left", font=("Arial Bold", 14), image=email_icon, compound="left").pack(anchor="w", pady=(38, 0), padx=(25, 0))
