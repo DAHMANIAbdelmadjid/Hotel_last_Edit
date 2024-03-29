@@ -2,6 +2,8 @@ from tkinter import messagebox
 from customtkinter import *
 from CTkTable import CTkTable
 from PIL import Image
+
+import consumption_db_func
 # from date_li import *
 from CTkXYFrame import *
 from  CTkMessagebox import CTkMessagebox
@@ -9,7 +11,7 @@ import StartPageAdmin_baj as sa
 import StartPageAdmin_reservation_baj as sar
 import StartPageAdmin_Service_baj as sas
 import StartPageAdmin_use_baj as sau
-
+from consumption_db_func import *
 import os
 from mode_mode import new_mode
 set_appearance_mode(f"{new_mode}") # Modes: "System" (standard), "Dark", "Light"
@@ -42,7 +44,7 @@ class StartPageAdmin_invoice(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
 
-        CTkButton(master=self.sidebar_frame, text="Users", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Clients", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_user).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
@@ -52,7 +54,7 @@ class StartPageAdmin_invoice(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20, 20))
 
-        CTkButton(master=self.sidebar_frame, text="Invoice", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Consumptions", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20, 20))
@@ -68,23 +70,19 @@ class StartPageAdmin_invoice(CTkFrame):
         self.title_frame = CTkFrame(master=self.main_view)
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
-        CTkLabel(master=self.title_frame, text="Invoices", font=("Arial Black", 25)).pack(anchor="nw", side="left")
-        CTkButton(master=self.title_frame, text="New Invoice", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
-        CTkButton(master=self.title_frame, text="Delete Invoice", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
-        CTkButton(master=self.title_frame, text="Updat Invoice", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
+        CTkLabel(master=self.title_frame, text="Consumptions", font=("Arial Black", 25)).pack(anchor="nw", side="left")
+        CTkButton(master=self.title_frame, text="New consumption", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
+        CTkButton(master=self.title_frame, text="Delete consumption", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
+        CTkButton(master=self.title_frame, text="Update consumption", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
-        self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search Invoice")
+        self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search for a consumption")
         self.entry.pack(side="left", padx=(13, 0), pady=15)
     
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
-        # connection=create_connection()
-        self.table_data=[["Title","Invoice ID", "Author", "Publisher", "category"],
-         [1,2,3,4,5],
-         [1,2,3,4,5],
-         [1,2,3,4,5],
-         [1,2,3,4,5]]
+        connection=create_connection()
+        self.table_data=consumption_db_func.select_all_consum(connection)
         self.table_frame = CTkXYFrame(master=self.main_view)
         self.table_frame.pack(expand=True, fill="both", padx=27, pady=21)
         self.table = CTkTable(master=self.table_frame, values=self.table_data)
@@ -152,7 +150,7 @@ class ToplevelWindow_(CTkToplevel):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Invoices")
+        self.title("Consumption")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
@@ -160,42 +158,42 @@ class ToplevelWindow_(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Title',
+            placeholder_text='Service ID',
             width= 200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Author',
+            placeholder_text='Client ID',
             width= 200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
 
-            placeholder_text='Publisher',
+            placeholder_text='Count',
             width= 200,
             height=35,
         )
-        self.kentry3 = CTkEntry(
-            master=self,
+        #self.kentry3 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='category',
-            width= 200,
-            height=35,
-        )
-        self.kentry4 = CTkEntry(
-            master=self,
+        #    placeholder_text='category',
+        #    width= 200,
+        #    height=35,
+        #)
+        #self.kentry4 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='ID',
-            width= 200,
-            height=35,
-        )
+        #    placeholder_text='ID',
+        #    width= 200,
+        #    height=35,
+        #)
 
         button = CTkButton(
             master=self,
-            text="New",
+            text="Add",
             font=("Arial Black", 15),
             text_color="white",
             hover= True,
@@ -207,29 +205,28 @@ class ToplevelWindow_(CTkToplevel):
 
 
 
-    command=self.Invoice_NEW
+    command=self.consum_NEW
 
         )
         self.title.place(x= 18, y= 20)
         self.kentry1.place(x= 236, y= 20)
         self.kentry2.place(x= 18, y=65 )
-        self.kentry3.place(x= 236, y=65 )
-        self.kentry4.place(x= 18, y=110 )
+        #self.kentry3.place(x= 236, y=65 )
+        #self.kentry4.place(x= 18, y=110 )
 
         button.place(x= 236, y= 110)
 
-    def Invoice_NEW(self):
+    def consum_NEW(self):
         pass
-            
-    #     self.texit = self.title.get()
-    #     self.texit1 = self.kentry1.get()
-    #     self.texit2 = self.kentry2.get()
+        self.texit = self.title.get()
+        self.texit1 = self.kentry1.get()
+        self.texit2 = self.kentry2.get()
     #     self.texit3 = self.kentry3.get()
     #     self.texit4 = int(self.kentry4.get())
-    #     connection=create_connection()
-    #     insert_book(connection,self.texit4,self.texit,self.texit1,self.texit2,self.texit3)
-    #     self.destroy()
-    #     self.master.switch_frame(StartPageAdmin)
+        connection=create_connection()
+        insert_consum(connection,self.texit2,self.texit,self.texit1)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_invoice)
 
 
 class ToplevelWindowDel_(CTkToplevel):
@@ -238,7 +235,7 @@ class ToplevelWindowDel_(CTkToplevel):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Invoices")
+        self.title("Consumption")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
@@ -247,7 +244,7 @@ class ToplevelWindowDel_(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Invoice ID',
+            placeholder_text='Consumption ID',
             width= 200,
             height=35,
         )
@@ -255,7 +252,7 @@ class ToplevelWindowDel_(CTkToplevel):
 
         Button = CTkButton(
             master=self,
-            text="Delet",
+            text="Delete",
             font=("Arial Black", 15),
             text_color="white",
             hover= True,
@@ -267,25 +264,25 @@ class ToplevelWindowDel_(CTkToplevel):
 
 
 
-            command=self.user_del
+            command=self.consum_del
         )
 
         self.title.place(x= 18, y= 20)
         Button.place(x= 236, y= 20)
-    def user_del(self):
+    def consum_del(self):
         pass
-    #     self.texit = self.title.get()
-    #     connection=create_connection()
-    #     delete_book(connection,self.texit)
-    #     self.destroy()
-    #     self.master.switch_frame(StartPageAdmin)
+        self.texit = self.title.get()
+        connection=create_connection()
+        delete_consum(connection,self.texit)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_invoice)
 class ToplevelWindowUp_(CTkToplevel,):
 
     def __init__(self,master, *args, **kwargs):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Invoices")
+        self.title("Consumption")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
@@ -293,38 +290,38 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Title',
+            placeholder_text='Consumption ID',
             width= 200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Author',
+            placeholder_text='Service ID',
             width= 200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
 
-            placeholder_text='Publisher',
+            placeholder_text='Client ID',
             width= 200,
             height=35,
         )
         self.kentry3 = CTkEntry(
             master=self,
 
-            placeholder_text='category',
+            placeholder_text='Count',
             width= 200,
             height=35,
         )
-        self.kentry4 = CTkEntry(
-            master=self,
+        #self.kentry4 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='ID',
-            width= 200,
-            height=35,
-        )
+        #    placeholder_text='ID',
+        #    width= 200,
+        #    height=35,
+        #)
 
         button = CTkButton(
             master=self,
@@ -344,7 +341,7 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.kentry1.place(x= 236, y= 20)
         self.kentry2.place(x= 18, y=65 )
         self.kentry3.place(x= 236, y=65 )
-        self.kentry4.place(x= 18, y=110 )
+        #self.kentry4.place(x= 18, y=110 )
 
         button.place(x= 236, y= 110)
 
@@ -354,8 +351,8 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.texit1 = self.kentry1.get()
         self.texit2 = self.kentry2.get()
         self.texit3 = self.kentry3.get()
-        self.texit4 = self.kentry4.get()
-        # connection=create_connection()
-        # update_book(connection,self.texit4,self.texit,self.texit1,self.texit2,self.texit3)
+        #self.texit4 = self.kentry4.get()
+        connection=create_connection()
+        update_consum(connection,self.texit,self.texit3,self.texit1,self.texit2)
         # self.destroy()
         self.master.switch_frame(StartPageAdmin_invoice)

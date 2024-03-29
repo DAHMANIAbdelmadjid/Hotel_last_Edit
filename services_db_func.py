@@ -25,84 +25,81 @@ def close_connection(connection):
         print("Connection closed")
 
 
-def insert_room(connection, *values):
+def insert_service(connection, *values):
     try:
         cursor = connection.cursor()
-        query = "INSERT INTO room (type, price, stat, discount) VALUES (%s, %s, %s, %s)"
+        query = "INSERT INTO service (descp, ser_price, ser_discount) VALUES (%s, %s, %s)"
         cursor.execute(query, values)
         connection.commit()
-        print("user inserted successfully")
+        print("service inserted successfully")
     except Error as e:
         print(f"Error: {e}")
     close_connection(connection)
 
 
-def select_all_rooms(connection):
+def select_all_services(connection):
     try:
         cursor = connection.cursor()
-        query = "SELECT * FROM room"
+        query = "SELECT * FROM service"
         cursor.execute(query)
-        rooms = cursor.fetchall()
+        services = cursor.fetchall()
         close_connection(connection)
-        room1 = [["Room number", "Type", "Price", "Status", "Discount"], ]
-        for room in rooms:
-            room1.append(list(room))
-        return room1
+        service1 = [["Service ID", "Description", "Price", "Discount"], ]
+        for service in services:
+            service1.append(list(service))
+        return service1
     except Error as e:
         print(f"Error: {e}")
     close_connection(connection)
 
 
-def update_room(connection, room_num, *new_values):
+def update_service(connection, ser_id, *new_values):
     try:
         cursor = connection.cursor()
-        query = "UPDATE room SET type=%s, price=%s, stat=%s, discount=%s WHERE room_num=%s"
-        cursor.execute(query, (*new_values, room_num))
+        query = "UPDATE service SET desco=%s, ser_price=%s, ser_discount=%s WHERE ser_id=%s"
+        cursor.execute(query, (*new_values, ser_id))
         connection.commit()
-        print("Book updated successfully")
+        print("Service updated successfully")
     except Error as e:
         print(f"Error: {e}")
     close_connection(connection)
 
 
-def delete_room(connection, room_num):
+def delete_service(connection, ser_id):
     try:
         cursor = connection.cursor()
-        delete_query = "DELETE FROM room WHERE room_num=%s"
-        cursor.execute(delete_query, (room_num,))
+        delete_query = "DELETE FROM service WHERE ser_id=%s"
+        cursor.execute(delete_query, (ser_id,))
         connection.commit()
     except Error as e:
         print(f"Error: {e}")
     close_connection(connection)
 
 
-def search_room(connection, room):
-    if not room:
+def search_service(connection, service):
+    if not service:
         return None
 
     try:
         cursor = connection.cursor()
-        WHERE = ["room_num", "type", "price", "stat", "discount"]
+        WHERE = ["ser_id", "descp", "ser_price", "ser_discount"]
         search_results = []
 
         for i in WHERE:
-            query = f"SELECT * FROM room WHERE {i} LIKE %s"
-            cursor.execute(query, ('%' + room + '%',))
+            query = f"SELECT * FROM service WHERE {i} LIKE %s"
+            cursor.execute(query, ('%' + service + '%',))
             search_results.extend(cursor.fetchall())
             if search_results:
                 break
 
         if not search_results:
-            print("No matching rooms found.")
+            print("No matching services found.")
         else:
             print("Search Results:")
-            return [["Room number", "Type", "Price", "Status", "Discount"]] + [list(room) for room in search_results]
+            return [["Service ID", "Description", "Price", "Discount"]] + [list(service) for service in search_results]
 
     except Error as e:
         print(f"Error: {e}")
         return None
     close_connection(connection)
-
-# con=create_connection()
-# print(search_book(con,"T"))
- 
+#ytfhgvyhtgfjhfgtyvjhgtfy

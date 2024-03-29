@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2024 at 11:37 PM
+-- Generation Time: Mar 29, 2024 at 09:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_id` int(20) NOT NULL,
+  `admin_name` varchar(60) NOT NULL,
+  `admin_psw` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `admin_name`, `admin_psw`) VALUES
+(1, 'Djihane', 'ireneadler'),
+(2, 'Madjid', 'geniusgenius');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `client`
 --
 
@@ -40,7 +60,8 @@ CREATE TABLE `client` (
 
 INSERT INTO `client` (`c_id`, `iden_num`, `c_name`, `c_ph_numer`) VALUES
 (5, 938472, 'Morsli', 347829),
-(6, 320984, 'iddkkkk', 0);
+(6, 9283746, 'Rachid', 675744),
+(8, 292983765, 'Dehmani Abdelmadjid', 867352);
 
 -- --------------------------------------------------------
 
@@ -49,10 +70,18 @@ INSERT INTO `client` (`c_id`, `iden_num`, `c_name`, `c_ph_numer`) VALUES
 --
 
 CREATE TABLE `consumption` (
+  `cons_id` int(20) NOT NULL,
   `cnt` int(20) DEFAULT NULL,
   `ser_id` int(20) DEFAULT NULL,
   `c_id` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `consumption`
+--
+
+INSERT INTO `consumption` (`cons_id`, `cnt`, `ser_id`, `c_id`) VALUES
+(2, 3, 2, 8);
 
 -- --------------------------------------------------------
 
@@ -69,6 +98,15 @@ CREATE TABLE `reservation` (
   `payment` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`res_id`, `check_in`, `check_out`, `c_id`, `room_num`, `payment`) VALUES
+(1, '2024-03-28 00:00:00', '2024-04-02', 5, 1, 49000),
+(4, '2024-03-28 00:00:00', '2024-04-04', 8, 2, 68600),
+(5, '2024-03-28 00:00:00', '2024-04-05', 6, 2, 78400);
+
 -- --------------------------------------------------------
 
 --
@@ -79,9 +117,17 @@ CREATE TABLE `room` (
   `room_num` int(20) NOT NULL,
   `type` varchar(50) DEFAULT NULL,
   `price` int(30) DEFAULT NULL,
-  `stat` int(1) DEFAULT NULL,
+  `stat` varchar(50) DEFAULT NULL,
   `discount` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`room_num`, `type`, `price`, `stat`, `discount`) VALUES
+(1, 'Single bed', 9800, 'Available', '0%'),
+(2, 'Single bed', 9800, 'Occupied', '0%');
 
 -- --------------------------------------------------------
 
@@ -97,8 +143,23 @@ CREATE TABLE `service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `service`
+--
+
+INSERT INTO `service` (`ser_id`, `descp`, `ser_price`, `ser_discount`) VALUES
+(1, 'Breakfast', 1000, '0%'),
+(2, 'Lunch', 2500, '0%'),
+(3, 'Dinner', 2500, '0%');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indexes for table `client`
@@ -111,6 +172,7 @@ ALTER TABLE `client`
 -- Indexes for table `consumption`
 --
 ALTER TABLE `consumption`
+  ADD PRIMARY KEY (`cons_id`),
   ADD KEY `c_id` (`c_id`),
   ADD KEY `ser_id` (`ser_id`);
 
@@ -139,28 +201,40 @@ ALTER TABLE `service`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `c_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `c_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `consumption`
+--
+ALTER TABLE `consumption`
+  MODIFY `cons_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `res_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `res_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `room_num` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `room_num` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `ser_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `ser_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

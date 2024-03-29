@@ -1,6 +1,8 @@
 from customtkinter import *
 from CTkTable import CTkTable
-# from date_li_Servise import *
+
+import services_db_func
+from services_db_func import *
 from CTkXYFrame import *
 from PIL import Image
 import StartPageAdmin_baj as sa
@@ -36,7 +38,7 @@ class StartPageAdmin_Servise(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
 
-        CTkButton(master=self.sidebar_frame, text="Users", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Clients", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_user).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
@@ -46,7 +48,7 @@ class StartPageAdmin_Servise(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//reservation.png"), size=(20, 20))
 
-        CTkButton(master=self.sidebar_frame, text="Invoice", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Consumptions", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_invoice).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//facture.png"), size=(20, 20))
@@ -68,7 +70,7 @@ class StartPageAdmin_Servise(CTkFrame):
         self.title_frame = CTkFrame(master=self.main_view, fg_color="transparent")
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
-        CTkLabel(master=self.title_frame, text="Service", font=("Arial Black", 25)).pack(anchor="nw", side="left")
+        CTkLabel(master=self.title_frame, text="Services", font=("Arial Black", 25)).pack(anchor="nw", side="left")
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
@@ -79,12 +81,8 @@ class StartPageAdmin_Servise(CTkFrame):
         self.Search_Entry.pack(side="left", padx=(13, 0), pady=15)
 
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
-        # connection=create_connection()
-        self.table_data=[["Service ID","Description", "Price", "Discount"],
-         [1,2,3,4],
-         [1,2,3,4],
-         [1,2,3,4],
-         [1,2,3,4]]
+        connection=create_connection()
+        self.table_data=services_db_func.select_all_services(connection)
         self.table_frame = CTkXYFrame(master=self.main_view)
         self.table_frame.pack(expand=True, fill="both", padx=27, pady=21)
         self.table = CTkTable(master=self.table_frame, values=self.table_data)#, header_color="#765827", hover_color="#B4B4B4")
@@ -119,15 +117,15 @@ class StartPageAdmin_Servise(CTkFrame):
         self.master.switch_frame(sar.StartPageAdmin_reservation)
     def to_search(self):
         pass
-        # connection=create_connection()
-        # self.tab=self.Search_Entry.get()
-        # self.args1=search_Servise(connection,self.tab)
-        # self.args2=select_all_Servises(connection)
-        # index=[]
-        # for value in  self.args2:
-        #     if not value in  self.args1:
-        #         index.append( self.args2.index(value))
-        # self.table.delete_rows(index)
+        connection=create_connection()
+        self.tab=self.Search_Entry.get()
+        self.args1=search_service(connection,self.tab)
+        self.args2=select_all_services(connection)
+        index=[]
+        for value in  self.args2:
+             if not value in  self.args1:
+                 index.append( self.args2.index(value))
+        self.table.delete_rows(index)
     # def select_and_search(self):
     #     connection=create_connection()
     #     self.text=self.Search_Entry.get()
@@ -147,7 +145,7 @@ class ToplevelWindowBor_boo(CTkToplevel):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Servise")
+        self.title("Service")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
