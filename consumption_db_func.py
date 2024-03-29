@@ -1,6 +1,5 @@
 import mysql.connector
 from mysql.connector import Error
-from datetime import datetime,timedelta
 
 def create_connection():
     connection = None
@@ -23,79 +22,70 @@ def close_connection(connection):
         connection.close()
         print("Connection closed")
 
-def insert_reserv(connection,check_out, c_id, room_num):
-    check_in= datetime.now().date()
+def insert_consum(connection,*values):
     try:
         cursor = connection.cursor()
-        cursor.execute("SELECT price, discount FROM room WHERE room_num = %s", (room_num,))
-        room_data = cursor.fetchone()
-        room_price = room_data[0]
-        room_discount = room_data[1]
-        check_out_datetime = datetime.strptime(check_out, '%Y-%m-%d')
-        check_out_date = check_out_datetime.date()
-
-        dur = (check_out_date - datetime.now().date()).days
-
-
-        if room_discount != '0%':
-            discount_fact = (100 - int(room_discount.strip('%'))) / 100
-            discounted_price = room_price * discount_fact
-            payment = dur * discounted_price
-        else:
-            payment = dur * room_price
-
-        cursor.execute(
-            "INSERT INTO reservation (check_in, check_out, c_id, room_num, payment) VALUES (%s, %s, %s, %s, %s)",
-            (check_in, check_out, c_id, room_num, payment))
+        query = "INSERT INTO consumption (cnt, ser_id, c_id) VALUES (%s, %s, %s)"
+        cursor.execute(query, values)
         connection.commit()
-        print("Reservation inserted successfully")
+        print("Consumption inserted successfully")
     except Error as e:
         print(f"Error: {e}")
+    close_connection(connection)
 
-def select_all_reserv(connection):
+def select_all_consum(connection):
     try:
         cursor = connection.cursor()
         query = """
             SELECT
-                reservation.res_id ,
-                reservation.check_in ,
-                reservation.check_out,
-                reservation.payment,
+                consumption.cons_id ,
+                service.ser_id ,
+                service.descp,
+                consumption.cnt,
                 client.c_id,
-                client.c_name,
-                room.room_num
+                client.c_name
             FROM
-                reservation 
+                consumption 
             JOIN
-                client  ON reservation.c_id = client.c_id
+                service  ON consumption.ser_id = service.ser_id
             JOIN
-                room ON reservation.room_num = room.room_num;
+                client ON consumption.c_id = client.c_id;
         """
         cursor.execute(query)
-        reservs = cursor.fetchall()
+        consums = cursor.fetchall()
         close_connection(connection)
 
-        reserv1 = [
-            ["Reservation ID", "Check in", "Check out", "Payment", "Client ID", "Client name", "Room number"],
+        consum1 = [
+            ["Consumption ID", "Service ID", "Description", "Count", "Client ID", "Client name"],
         ]
-        for reserv in reservs:
-            reserv1.append(list(reserv))
-        return reserv1
+        for consum in consums:
+            consum1.append(list(consum))
+        return consum1
     except Error as e:
         print(f"Error: {e}")
 
+def update_consum(connection, cons_id, *new_values):
+    try:
+        cursor = connection.cursor()
+        query = "UPDATE consumption SET cnt=%s, ser_id=%s, c_id=%s WHERE cons_id=%s"
+        cursor.execute(query, (*new_values, cons_id))
+        connection.commit()
+        print("Client updated successfully")
+    except Error as e:
+        print(f"Error: {e}")
+    close_connection(connection)
 
-def delete_reserv(connection, res_id):
+def delete_consum(connection, cons_id):
 
     try:
         cursor = connection.cursor()
-        delete_query = "DELETE FROM reservation WHERE res_id=%s"
-        cursor.execute(delete_query, (res_id,))
+        delete_query = "DELETE FROM consumption WHERE cons_id=%s"
+        cursor.execute(delete_query, (cons_id,))
         connection.commit()
     except Error as e:
         print(f"Error: {e}")
 
-def search_reserv(connection, reserv):
+def search_consum(connection, reserv):
     if reserv == "":
         return None
 
@@ -138,6 +128,3 @@ def search_reserv(connection, reserv):
         print(f"Error: {e}")
         return None
 
-# con=create_connection()
-# print(delete_borrow(con,3))
- 

@@ -134,16 +134,16 @@ class StartPageAdmin_reservation(CTkFrame):
         else:
             self.toplevel_window.focus()
     def to_search(self):
-        pass
-    #     # connection=create_connection()
-    #     self.tab=self.entry.get()
-    #     self.args=search_book(connection,self.tab)
-    #     self.args2=select_all_books(connection)
+         pass
+    #    connection=create_connection()
+    #    self.tab=self.entry.get()
+    #    self.args=search_reserv(connection,self.tab)
+    #     self.args2=select_all_reserv(connection)
     #     index=[]
-    #     for value in  self.args2:
+    #    for value in  self.args2:
     #         if not value in  self.args:
     #             index.append( self.args2.index(value))
-    #     self.table.delete_rows(index)
+    #    self.table.delete_rows(index)
 class ToplevelWindow_(CTkToplevel):
 
     def __init__(self, master,*args, **kwargs):
