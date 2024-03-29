@@ -45,7 +45,7 @@ class StartPageAdmin_reservation(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
 
-        CTkButton(master=self.sidebar_frame, text="Users", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Clients", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_user).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
@@ -150,7 +150,7 @@ class ToplevelWindow_(CTkToplevel):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Services")
+        self.title("Reservation")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
@@ -179,7 +179,7 @@ class ToplevelWindow_(CTkToplevel):
         #self.kentry3 = CTkEntry(
         #    master=self,
 
-        #    placeholder_text='category',
+        #    placeholder_text='Room number',
         #    width= 200,
         #   height=35,
         #)
@@ -236,7 +236,7 @@ class ToplevelWindowDel_(CTkToplevel):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Services")
+        self.title("Reservation")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
@@ -245,7 +245,7 @@ class ToplevelWindowDel_(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Service ID',
+            placeholder_text='Reservation ID',
             width= 200,
             height=35,
         )
@@ -283,7 +283,7 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Services")
+        self.title("Reservation")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
@@ -291,38 +291,38 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Title',
+            placeholder_text='Reservation ID',
             width= 200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Author',
+            placeholder_text='Check out',
             width= 200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
 
-            placeholder_text='Publisher',
+            placeholder_text='Client ID',
             width= 200,
             height=35,
         )
         self.kentry3 = CTkEntry(
             master=self,
 
-            placeholder_text='category',
+            placeholder_text='Room number',
             width= 200,
             height=35,
         )
-        self.kentry4 = CTkEntry(
-            master=self,
+        #self.kentry4 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='ID',
-            width= 200,
-            height=35,
-        )
+        #    placeholder_text='ID',
+        #    width= 200,
+        #    height=35,
+        #)
 
         button = CTkButton(
             master=self,
@@ -342,7 +342,7 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.kentry1.place(x= 236, y= 20)
         self.kentry2.place(x= 18, y=65 )
         self.kentry3.place(x= 236, y=65 )
-        self.kentry4.place(x= 18, y=110 )
+        #self.kentry4.place(x= 18, y=110 )
 
         button.place(x= 236, y= 110)
 
@@ -352,7 +352,7 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.texit1 = self.kentry1.get()
         self.texit2 = self.kentry2.get()
         self.texit3 = self.kentry3.get()
-        self.texit4 = self.kentry4.get()
+        #self.texit4 = self.kentry4.get()
         # connection=create_connection()
         # update_book(connection,self.texit4,self.texit,self.texit1,self.texit2,self.texit3)
         # self.destroy()

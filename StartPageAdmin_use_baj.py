@@ -41,7 +41,7 @@ class StartPageAdmin_use(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
 
-        CTkButton(master=self.sidebar_frame, text="Users", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Clients", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_user).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
@@ -67,12 +67,12 @@ class StartPageAdmin_use(CTkFrame):
         self.title_frame = CTkFrame(master=self.main_view)
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
-        CTkLabel(master=self.title_frame, text="Users", font=("Arial Black", 25)).pack(anchor="nw", side="left")
-        CTkButton(master=self.title_frame, text="New User", font=("Arial Black", 15), command=self.open_toplevel).pack(
+        CTkLabel(master=self.title_frame, text="Clients", font=("Arial Black", 25)).pack(anchor="nw", side="left")
+        CTkButton(master=self.title_frame, text="New client", font=("Arial Black", 15), command=self.open_toplevel).pack(
             anchor="ne", side="right")
-        CTkButton(master=self.title_frame, text="Delete User", font=("Arial Black", 15),
+        CTkButton(master=self.title_frame, text="Delete client", font=("Arial Black", 15),
                   command=self.open_toplevelDel).pack(anchor="ne", side="right", padx=12)
-        CTkButton(master=self.title_frame, text="Update User", font=("Arial Black", 15),
+        CTkButton(master=self.title_frame, text="Update client", font=("Arial Black", 15),
                   command=self.open_toplevelUp).pack(anchor="ne", side="right", padx=8)
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
@@ -153,7 +153,7 @@ class ToplevelWindow(CTkToplevel):
         self.master = master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Users")
+        self.title("Client")
         self.geometry("550x160")
         self.resizable(width=False, height=False)
         self.configure(bg='#fff')
@@ -165,16 +165,16 @@ class ToplevelWindow(CTkToplevel):
             width=200,
             height=35,
         )
-        #self.kentry1 = CTkEntry(
-        #    master=self,
+        self.kentry1 = CTkEntry(
+            master=self,
 
-        #    placeholder_text='Name',
-        #    width=200,
-        #    height=35,
-        #)
+            placeholder_text='Name',
+            width=200,
+            height=35,
+        )
         self.kentry2 = CTkEntry(
             master=self,
-            placeholder_text='Name',
+            placeholder_text='Phone Number',
             width=200,
             height=35,
         )
@@ -185,13 +185,13 @@ class ToplevelWindow(CTkToplevel):
         #    width=200,
         #    height=35,
         #)
-        self.kentry4 = CTkEntry(
-            master=self,
+        #self.kentry4 = CTkEntry(
+        #    master=self,
 
-            placeholder_text='Phone number',
-            width=200,
-            height=35,
-        )
+        #    placeholder_text='Phone number',
+        #    width=200,
+        #    height=35,
+        #)
         # exitPath = CTkEntry(
         #     master=self,
         #     border_color=765827",
@@ -202,7 +202,7 @@ class ToplevelWindow(CTkToplevel):
 
         button = CTkButton(
             master=self,
-            text="New",
+            text="Add",
             font=("Arial Black", 15),
             text_color="white",
             hover=True,
@@ -216,10 +216,10 @@ class ToplevelWindow(CTkToplevel):
 
         )
         self.title.place(x=18, y=20)
-        #self.kentry1.place(x=236, y=20)
+        self.kentry1.place(x=236, y=20)
         self.kentry2.place(x=18, y=65)
         #self.kentry3.place(x=236, y=65)
-        self.kentry4.place(x=18, y=110)
+        #self.kentry4.place(x=18, y=110)
 
         button.place(x=236, y=110)
 
@@ -227,12 +227,12 @@ class ToplevelWindow(CTkToplevel):
         pass
 
         self.texit = self.title.get()
-        # self.texit1 = self.kentry1.get()
+        self.texit1 = self.kentry1.get()
         self.texit2 = self.kentry2.get()
         # self.texit3 = self.kentry3.get()
-        self.texit4 = int(self.kentry4.get())
+        #self.texit4 = int(self.kentry4.get())
         connection=create_connection()
-        insert_client(connection,self.texit,self.texit2,self.texit4)
+        insert_client(connection,self.texit,self.texit1,self.texit2)
         self.destroy()
         self.master.switch_frame(StartPageAdmin_use)
 
@@ -244,7 +244,7 @@ class ToplevelWindowDel(CTkToplevel):
 
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Users")
+        self.title("Client")
         self.geometry("550x160")
         self.resizable(width=False, height=False)
         self.configure(bg='#fff')
@@ -292,7 +292,7 @@ class ToplevelWindowUp(CTkToplevel):
         self.master = master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Users")
+        self.title("Client")
         self.geometry("550x160")
         self.resizable(width=False, height=False)
         self.configure(bg='#fff')

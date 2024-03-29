@@ -44,7 +44,7 @@ class StartPageAdmin_invoice(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
 
-        CTkButton(master=self.sidebar_frame, text="Users", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Clients", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_user).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
@@ -77,7 +77,7 @@ class StartPageAdmin_invoice(CTkFrame):
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
-        self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search Invoice")
+        self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search for a consumption")
         self.entry.pack(side="left", padx=(13, 0), pady=15)
     
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)

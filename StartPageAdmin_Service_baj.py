@@ -38,7 +38,7 @@ class StartPageAdmin_Servise(CTkFrame):
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
 
-        CTkButton(master=self.sidebar_frame, text="Users", image=button_image, font=("Arial Bold", 14), anchor="w",
+        CTkButton(master=self.sidebar_frame, text="Clients", image=button_image, font=("Arial Bold", 14), anchor="w",
                   command=self.to_user).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//service.png"), size=(20, 20))
@@ -145,7 +145,7 @@ class ToplevelWindowBor_boo(CTkToplevel):
         self.master=master
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Servise")
+        self.title("Service")
         self.geometry("550x160")
         self.resizable(width = False ,height = False)
         self.configure(bg='#fff')
