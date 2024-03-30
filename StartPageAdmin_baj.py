@@ -74,9 +74,9 @@ class StartPageAdmin(CTkFrame):
         self.title_frame.pack(anchor="n", fill="x", padx=27, pady=(29, 0))
 
         CTkLabel(master=self.title_frame, text="Rooms", font=("Arial Black", 25)).pack(anchor="nw", side="left")
-        CTkButton(master=self.title_frame, text="New Room", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
-        CTkButton(master=self.title_frame, text="Delete Room", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
-        CTkButton(master=self.title_frame, text="Update Room", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
+        CTkButton(master=self.title_frame, text="New", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
+        CTkButton(master=self.title_frame, text="Delete", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
+        CTkButton(master=self.title_frame, text="Update", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
 
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)

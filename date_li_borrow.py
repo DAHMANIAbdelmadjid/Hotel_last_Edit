@@ -43,7 +43,17 @@ def insert_reserv(connection,check_out, c_id, room_num):
             payment = dur * discounted_price
         else:
             payment = dur * room_price
-
+        cursor.execute("""
+UPDATE client
+SET faithful = CASE 
+                    WHEN EXISTS (SELECT 1 FROM reservation WHERE c_id = client.c_id) THEN
+                        CASE 
+                            WHEN (SELECT MAX(check_out) FROM reservation WHERE c_id = client.c_id) >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH) THEN 'Loyal'
+                            ELSE 'Unloyal'
+                        END
+                    ELSE 'Unloyal'
+                END;
+""")
         cursor.execute(
             "INSERT INTO reservation (check_in, check_out, c_id, room_num, payment) VALUES (%s, %s, %s, %s, %s)",
             (check_in, check_out, c_id, room_num, payment))
@@ -138,6 +148,5 @@ def search_reserv(connection, reserv):
         print(f"Error: {e}")
         return None
 
-# con=create_connection()
-# print(delete_borrow(con,3))
- 
+con=create_connection()
+print(insert_reserv(con,'2021-10-10',5,1))

@@ -22,7 +22,8 @@ class SampleApp(CTk):
         """Destroys current frame and replaces it with a new one."""
         new_frame = frame_class(self)
         if self._frame is not None:
-            self._frame.destroy()
+            self._frame.place_forget() # Hide the button instead of destroying it
+            self._frame.place(x=100, y=100) # Show the button again
         self._frame = new_frame
         self._frame.pack()
 
@@ -70,24 +71,23 @@ class LoginPage(CTkFrame):
     def getMode(self):
         return self.mode
     def check_login(self,event):
-            username = self.username_entry.get()
-            password = self.password_entry.get()
-            connection=create_connection()
-            cursor = connection.cursor()
-            cursor.execute("SELECT admin_name, admin_psw FROM admin")
-            admins = cursor.fetchall()
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        connection=create_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT admin_name, admin_psw FROM admin")
+        admins = cursor.fetchall()
+        f = 0
+        for admin in admins:
+            if username == admin[1] and password == admin[0]:
+                f = 1
+                self.master.switch_frame(StartPageAdmin)
+                break
 
-            f = 0
-            for admin in admins:
-                if username == admin[0] and password == admin[1]:
-                    f = 1
-                    self.master.switch_frame(StartPageAdmin)
-                    break
+        if f == 0:
+            messagebox.showerror("Error", "Invalid username or password")
 
-            if f == 0:
-                messagebox.showerror("Error", "Invalid username or password")
-
-            connection.close()
+        connection.close()
 
 
 if __name__ == "__main__":
