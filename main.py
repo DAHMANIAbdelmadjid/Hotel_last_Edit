@@ -75,11 +75,11 @@ class LoginPage(CTkFrame):
         password = self.password_entry.get()
         connection=create_connection()
         cursor = connection.cursor()
-        cursor.execute("SELECT admin_name, admin_psw FROM admin")
+        cursor.execute("SELECT admin_email, admin_psw FROM admin")
         admins = cursor.fetchall()
         f = 0
         for admin in admins:
-            if username == admin[1] and password == admin[0]:
+            if username == admin[0] and password == admin[1]:
                 f = 1
                 self.master.switch_frame(StartPageAdmin)
                 break
