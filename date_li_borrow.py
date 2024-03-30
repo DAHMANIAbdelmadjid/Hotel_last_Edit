@@ -36,7 +36,7 @@ def insert_reserv(connection,check_out, c_id, room_num):
 
         dur = (check_out_date - datetime.now().date()).days
 
-
+#
         if room_discount != '0%':
             discount_fact = (100 - int(room_discount.strip('%'))) / 100
             discounted_price = room_price * discount_fact

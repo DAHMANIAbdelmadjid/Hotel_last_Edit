@@ -88,7 +88,7 @@ class LoginPage(CTkFrame):
             messagebox.showerror("Error", "Invalid username or password")
 
         connection.close()
-
+#
 
 if __name__ == "__main__":
    
