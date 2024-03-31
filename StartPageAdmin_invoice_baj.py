@@ -140,9 +140,9 @@ class StartPageAdmin_invoice(CTkFrame):
         self.args=search_consum(connection,self.tab)
         self.args2=select_all_consum(connection)
         index=[]
-        for value in  self.args2:
-             if not value in  self.args:
-                 index.append( self.args2.index(value))
+        for value in self.args2:
+             if not value in self.args:
+                 index.append(self.args2.index(value))
         self.table.delete_rows(index)
 class ToplevelWindow_(CTkToplevel):
 
