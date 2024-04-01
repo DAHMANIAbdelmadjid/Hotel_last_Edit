@@ -8,12 +8,9 @@ from PIL import Image
 import StartPageAdmin_baj as sa
 import StartPageAdmin_invoice_baj as sai
 import StartPageAdmin_reservation_baj as sar
-import StartPageAdmin_use_baj as sau
+import StartPageAdmin_Service_baj as sau
 
 from  CTkMessagebox import CTkMessagebox
-from mode_mode import new_mode
-set_appearance_mode(f"{new_mode}")
-set_default_color_theme("blue.json")  # Themes: "blue" (standard), "green", "dark-blue"
 
 class StartPageAdmin_Servise(CTkFrame):
     def __init__(self, master):
@@ -24,9 +21,10 @@ class StartPageAdmin_Servise(CTkFrame):
 
         self.sidebar_frame = CTkFrame(master=self, width=176, height=650, corner_radius=0)
         self.sidebar_frame.pack_propagate(0)
-        
-        button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//mode.png"), size=(20,20))
-        CTkButton(master=self.sidebar_frame, width=5,image=button_image,text="", font=("Arial Bold", 14),  anchor="w",command=self.change_appearance_mode_event).pack(anchor="sw", padx=5, pady=(16, 0))
+
+        button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//cogwheel.png"), size=(20, 20))
+        CTkButton(master=self.sidebar_frame, width=5, image=button_image, text="", font=("Arial Bold", 14), anchor="w",
+                  command=self.open_toplevelSett).pack(anchor="sw", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//receptionniste.png"), size=(100,100))
         CTkLabel(self.sidebar_frame,text="",image=button_image).pack(anchor="center", padx=5, pady=(16, 0))
@@ -72,10 +70,12 @@ class StartPageAdmin_Servise(CTkFrame):
 
         CTkLabel(master=self.title_frame, text="Services", font=("Arial Black", 25)).pack(anchor="nw", side="left")
 
+
+        CTkButton(master=self.title_frame, text="New", font=("Arial Black", 15), command=self.open_toplevel).pack(anchor="ne", side="right")
+        CTkButton(master=self.title_frame, text="Delete", font=("Arial Black", 15),command=self.open_toplevelDel).pack(anchor="ne", side="right",padx=12)
+        CTkButton(master=self.title_frame, text="Update", font=("Arial Black", 15),command=self.open_toplevelUp).pack(anchor="ne", side="right",padx=8)
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
-        
-        CTkButton(master=self.title_frame, text="Servise Book", font=("Arial Black", 15),command=self.Servise_Book).pack(anchor="ne", side="right",padx=12)
 
         self.Search_Entry=CTkEntry(master=self.search_container, width=305 , border_width=2, placeholder_text="Search for a service")
         self.Search_Entry.pack(side="left", padx=(13, 0), pady=15)
@@ -105,7 +105,7 @@ class StartPageAdmin_Servise(CTkFrame):
         self.master.switch_frame(sa.StartPageAdmin)
 
     def to_user(self):
-        self.master.switch_frame(sau.StartPageAdmin_use)
+        self.master.switch_frame(sau.StartPageAdmin_Service)
 
     def to_servise(self):
         self.master.switch_frame(StartPageAdmin_Servise)
@@ -133,84 +133,270 @@ class StartPageAdmin_Servise(CTkFrame):
     #         return select_all_books(connection)
     #     else:
     #         return search_book(connection,self.text)
-        
-    def Servise_Book(self):
-            if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
-                self.toplevel_window = ToplevelWindowBor_boo(self,self.master)  
-            else:
-                self.toplevel_window.focus() 
-            
-class ToplevelWindowBor_boo(CTkToplevel):
-    def __init__(self,master, *args, **kwargs):
-        self.master=master
+
+    def open_toplevelSett(self):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = ToplevelSettings(self, self.master)
+        else:
+            self.toplevel_window.focus()
+    def open_toplevel(self):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = ToplevelWindow(self, self.master)
+        else:
+            self.toplevel_window.focus()
+
+    def open_toplevelUp(self):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = ToplevelWindowUp(self, self.master)
+        else:
+            self.toplevel_window.focus()
+
+    def open_toplevelDel(self):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = ToplevelWindowDel(self, self.master)
+        else:
+            self.toplevel_window.focus()
+
+
+class ToplevelSettings(CTkToplevel):
+
+    def __init__(self, frame, master, *args, **kwargs):
+        self.master = master
+        super().__init__(*args, **kwargs)
+        self.title("Client")
+        self.geometry("200x160")
+        self.resizable(width=False, height=False)
+        self.configure(bg='#fff')
+        self.appearance_mode_optionemenu = CTkOptionMenu(self,
+                                                         values=["Light", "Dark", "System"],
+                                                         command=self.change_appearance_mode_event)
+        self.appearance_mode_optionemenu.pack(side="top", padx=20, pady=10)
+        self.scaling_optionemenu = CTkOptionMenu(self,
+                                                 values=["100%", "110%", "120%", "130%", "140%"],
+                                                 command=self.change_scaling_event)
+        self.scaling_optionemenu.pack(side="top", padx=20, pady=10)
+
+        self.color = CTkOptionMenu(self,
+                                   values=["blue", "green", "dark-blue"],
+                                   command=self.change_color_event)
+        self.color.pack(side="top", padx=20, pady=10)
+
+    def change_appearance_mode_event(self, new_appearance_mode: str):
+        set_appearance_mode(new_appearance_mode)
+
+    def change_scaling_event(self, new_scaling: str):
+        new_scaling_float = int(new_scaling.replace("%", "")) / 100
+        set_widget_scaling(new_scaling_float)
+
+    def change_color_event(self, new_color: str):
+        set_default_color_theme(f"{new_color}")
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_Servise)
+
+
+
+class ToplevelWindowDel(CTkToplevel):
+
+    def __init__(self, master, *args, **kwargs):
+        self.master = master
+
         super().__init__(*args, **kwargs)
         self.geometry("400x300")
-        self.title("Service")
+        self.title("Client")
         self.geometry("550x160")
-        self.resizable(width = False ,height = False)
+        self.resizable(width=False, height=False)
         self.configure(bg='#fff')
 
 
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='ID User',
-            width= 200,
-            height=35,
-        )
-        self.Entry1 = CTkEntry(
-            master=self,
-
-            placeholder_text='ID Book',
-            width= 200,
+            placeholder_text='User ID',
+            width=200,
             height=35,
         )
 
-        Button1 = CTkButton(
-            master=self,
-            text="New",
-            font=("Arial Black", 15),
-            text_color="white",
-            hover= True,
-
-            height=35,
-            width= 200,
-            border_width=2,
-            corner_radius=4,
-            command=self.new_
-        )
-        Button= CTkButton(
+        Button = CTkButton(
             master=self,
             text="Delete",
             font=("Arial Black", 15),
             text_color="white",
-            hover= True,
+            hover=True,
 
             height=35,
-            width= 200,
+            width=200,
             border_width=2,
             corner_radius=4,
- 
 
-        command=self.dele
+            command=self.user_del
         )
 
-        self.title.place(x= 18, y= 20)
-        self.Entry1.place(x= 236, y= 20)
-        Button1.place(x= 236, y= 110)
-        Button.place(x= 18, y= 110)
-    def dele(self):
-            pass
-            # connection=create_connection()
-            # self.tes=self.Entry1.get()
-            # delete_Servise(connection,self.tes)
-            # self.destroy()
-            # self.master.switch_frame(StartPageAdmin_Servise)
-    def new_(self):
-            pass
-            # connection=create_connection()
-            # self.tes1=self.title.get()            
-            # self.tes=self.Entry1.get()
-            # insert_Servise(connection,self.tes1,self.tes)
-            # self.destroy()
-            # self.master.switch_frame(StartPageAdmin_Servise)
+        self.title.place(x=18, y=20)
+
+        Button.place(x=236, y=20)
+
+    def user_del(self):
+        pass
+        self.texit = self.title.get()
+        connection=create_connection()
+        # delete_user(connection,self.texit)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_Servise)
+
+
+class ToplevelWindowUp(CTkToplevel):
+
+    def __init__(self, master, *args, **kwargs):
+        self.master = master
+        super().__init__(*args, **kwargs)
+        self.geometry("400x300")
+        self.title("Client")
+        self.geometry("550x160")
+        self.resizable(width=False, height=False)
+        self.configure(bg='#fff')
+
+        self.title = CTkEntry(
+            master=self,
+
+            placeholder_text='Client ID',
+            width=200,
+            height=35,
+        )
+        self.kentry1 = CTkEntry(
+            master=self,
+
+            placeholder_text='Identification number',
+            width=200,
+            height=35,
+        )
+        self.kentry2 = CTkEntry(
+            master=self,
+
+            placeholder_text='Name',
+            width=200,
+            height=35,
+        )
+        self.kentry3 = CTkEntry(
+            master=self,
+
+            placeholder_text='Phone number',
+            width=200,
+            height=35,
+        )
+        #self.kentry4 = CTkEntry(
+        #    master=self,
+
+        #    placeholder_text='ID',
+        #    width=200,
+        #    height=35,
+        #)
+        # exitPath = CTkEntry(
+        #     master=self,
+        #     border_color=765827",
+        #     placeholder_text='File exit path',
+        #     width= 200,
+        #     height=35,
+        # )
+
+        button = CTkButton(
+            master=self,
+            text="Update",
+            font=("Arial Black", 15),
+            text_color="white",
+            hover=True,
+
+            height=35,
+            width=200,
+            border_width=2,
+            corner_radius=4,
+
+            command=self.user_NEW
+
+        )
+        self.title.place(x=18, y=20)
+        self.kentry1.place(x=236, y=20)
+        self.kentry2.place(x=18, y=65)
+        self.kentry3.place(x=236, y=65)
+        #self.kentry4.place(x=18, y=110)
+
+        button.place(x=236, y=110)
+
+    def user_NEW(self):
+        pass
+
+        self.texit = self.title.get()
+        self.texit1 = self.kentry1.get()
+        self.texit2 = self.kentry2.get()
+        self.texit3 = self.kentry3.get()
+        #self.texit4 = int(self.kentry4.get())
+        connection=create_connection()
+        # update_client(connection,self.texit,self.texit1,self.texit2,self.texit3)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_Servise)
+
+
+class ToplevelWindow(CTkToplevel):
+
+    def __init__(self, master, *args, **kwargs):
+        self.master = master
+        super().__init__(*args, **kwargs)
+        self.geometry("400x300")
+        self.title("Client")
+        self.geometry("550x160")
+        self.resizable(width=False, height=False)
+        self.configure(bg='#fff')
+
+
+        self.title = CTkEntry(
+            master=self,
+            placeholder_text='Identification number',
+            width=200,
+            height=35,
+        )
+        self.kentry1 = CTkEntry(
+            master=self,
+
+            placeholder_text='Name',
+            width=200,
+            height=35,
+        )
+        self.kentry2 = CTkEntry(
+            master=self,
+            placeholder_text='Phone Number',
+            width=200,
+            height=35,
+        )
+
+        button = CTkButton(
+            master=self,
+            text="Add",
+            font=("Arial Black", 15),
+            text_color="white",
+            hover=True,
+
+            height=35,
+            width=200,
+            border_width=2,
+            corner_radius=4,
+
+            command=self.user_NEW
+
+        )
+        self.title.place(x=18, y=20)
+        self.kentry1.place(x=236, y=20)
+        self.kentry2.place(x=18, y=65)
+
+        button.place(x=236, y=110)
+
+    def user_NEW(self):
+        pass
+
+        self.texit = self.title.get()
+        self.texit1 = self.kentry1.get()
+        self.texit2 = self.kentry2.get()
+        # self.texit3 = self.kentry3.get()
+        #self.texit4 = int(self.kentry4.get())
+        # connection=create_connection()
+        # insert_client(connection,self.texit,self.texit1,self.texit2)
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin_Servise)

@@ -11,11 +11,6 @@ import StartPageAdmin_invoice_baj as sai
 import StartPageAdmin_reservation_baj as sar
 import StartPageAdmin_Service_baj as sas
 import StartPageAdmin_use_baj as sau
-from mode_mode import new_mode
-set_appearance_mode(f"{new_mode}")
-
-set_default_color_theme("blue.json")  # Themes: "blue" (standard), "green", "dark-blue"
-
 
 
 
@@ -26,23 +21,22 @@ class StartPageAdmin(CTkFrame):
         self.master=master
         CTkFrame.__init__(self, master)
         master.pack_propagate(0)
-        master.geometry("856x645") 
+        master.geometry("856x645")
         master.resizable(0,0)
-        set_default_color_theme("dark-blue")
         self.mode="light"
 
         self.sidebar_frame = CTkFrame(master=self, width=176, height=650, corner_radius=0)
         self.sidebar_frame.pack_propagate(0)
 
-        button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//mode.png"), size=(20,20))
-        CTkButton(master=self.sidebar_frame, width=5,image=button_image,text="", font=("Arial Bold", 14),  anchor="w",command=self.change_appearance_mode_event).pack(anchor="sw", padx=5, pady=(16, 0))
+        button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//cogwheel.png"), size=(20,20))
+        CTkButton(master=self.sidebar_frame, width=5,image=button_image,text="", font=("Arial Bold", 14),  anchor="w",command=self.open_toplevelSett).pack(anchor="sw", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//receptionniste.png"), size=(100,100))
         CTkLabel(self.sidebar_frame,text="",image=button_image).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//hotel.png"), size=(16,16))
 
-        
+
         CTkButton(master=self.sidebar_frame, image=button_image,text="Rooms", font=("Arial Bold", 14),  anchor="w",command=self.to_Room).pack(anchor="center", padx=5, pady=(16, 0))
 
         button_image = CTkImage(Image.open(f"{os.path.dirname(__file__)}//profil.png"), size=(16, 16))
@@ -82,7 +76,7 @@ class StartPageAdmin(CTkFrame):
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
         self.entry=CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search for a room")
         self.entry.pack(side="left", padx=(13, 0), pady=15)
-    
+
         CTkButton(master=self.search_container, text="Search", font=("Arial Black", 15),command=self.to_search).pack(anchor="ne",padx=13, pady=15)
         connection=create_connection()
         self.table_data=date_li.select_all_rooms(connection)
@@ -95,8 +89,8 @@ class StartPageAdmin(CTkFrame):
         self.main_view.pack(side="left", fill="both", expand=True)
         self.toplevel_window = None
 
-            
-        
+
+
     def change_appearance_mode_event(self):
         global new_mode
         if new_mode=="Light":
@@ -122,19 +116,19 @@ class StartPageAdmin(CTkFrame):
         self.master.switch_frame(sar.StartPageAdmin_reservation)
     def open_toplevel(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
-            self.toplevel_window = ToplevelWindow_(self,self.master)  
+            self.toplevel_window = ToplevelWindow_(self,self.master)
         else:
-            self.toplevel_window.focus() 
+            self.toplevel_window.focus()
     def open_toplevelUp(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
-            self.toplevel_window = ToplevelWindowUp_(self,self.master) 
+            self.toplevel_window = ToplevelWindowUp_(self,self.master)
         else:
-            self.toplevel_window.focus() 
+            self.toplevel_window.focus()
     def open_toplevelDel(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
-            self.toplevel_window = ToplevelWindowDel_(self,self.master)  
+            self.toplevel_window = ToplevelWindowDel_(self,self.master)
         else:
-            self.toplevel_window.focus() 
+            self.toplevel_window.focus()
 
     def to_search(self):
         pass
@@ -147,6 +141,45 @@ class StartPageAdmin(CTkFrame):
              if not value in  self.args:
                  index.append( self.args2.index(value))
         self.table.delete_rows(index)
+
+    def open_toplevelSett(self):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = ToplevelSettings(self, self.master)
+        else:
+            self.toplevel_window.focus()
+class ToplevelSettings(CTkToplevel):
+
+    def __init__(self, frame,master, *args, **kwargs):
+        self.master = master
+        super().__init__(*args, **kwargs)
+        self.title("Client")
+        self.geometry("200x160")
+        self.resizable(width=False, height=False)
+        self.configure(bg='#fff')
+        self.appearance_mode_optionemenu = CTkOptionMenu(self,
+                                                                       values=["Light", "Dark", "System"],
+                                                                       command=self.change_appearance_mode_event)
+        self.appearance_mode_optionemenu.pack(side="top", padx=20, pady=10)
+        self.scaling_optionemenu = CTkOptionMenu(self,
+                                                               values=["100%", "110%", "120%", "130%", "140%"],
+                                                               command=self.change_scaling_event)
+        self.scaling_optionemenu.pack(side="top", padx=20, pady=10)
+
+        self.color = CTkOptionMenu(self,
+                                                               values=["blue", "green", "dark-blue"],
+                                                               command=self.change_color_event)
+        self.color.pack(side="top", padx=20, pady=10)
+
+    def change_appearance_mode_event(self, new_appearance_mode: str):
+        set_appearance_mode(new_appearance_mode)
+    def change_scaling_event(self, new_scaling: str):
+        new_scaling_float = int(new_scaling.replace("%", "")) / 100
+        set_widget_scaling(new_scaling_float)
+    def change_color_event(self, new_color: str):
+        set_default_color_theme(f"{new_color}")
+        self.destroy()
+        self.master.switch_frame(StartPageAdmin)
+
 class ToplevelWindow_(CTkToplevel):
 
     def __init__(self, master,*args, **kwargs):
