@@ -197,7 +197,7 @@ class ToplevelWindow_(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Check out',
+            placeholder_text='Duration',
             width= 200,
             height=35,
         )
@@ -337,7 +337,7 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Check out',
+            placeholder_text='Duration',
             width= 200,
             height=35,
         )
