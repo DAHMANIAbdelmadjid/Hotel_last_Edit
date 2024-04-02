@@ -211,7 +211,7 @@ class ToplevelWindowDel(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='User ID',
+            placeholder_text='Service ID',
             width=200,
             height=35,
         )
@@ -239,7 +239,7 @@ class ToplevelWindowDel(CTkToplevel):
         pass
         self.texit = self.title.get()
         connection=create_connection()
-        # delete_user(connection,self.texit)
+        delete_service(connection,self.texit)
         self.destroy()
         self.master.switch_frame(StartPageAdmin_Servise)
 
@@ -258,28 +258,28 @@ class ToplevelWindowUp(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Client ID',
+            placeholder_text='Service ID',
             width=200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Identification number',
+            placeholder_text='Description',
             width=200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
 
-            placeholder_text='Name',
+            placeholder_text='Price',
             width=200,
             height=35,
         )
         self.kentry3 = CTkEntry(
             master=self,
 
-            placeholder_text='Phone number',
+            placeholder_text='Discount',
             width=200,
             height=35,
         )
@@ -330,7 +330,7 @@ class ToplevelWindowUp(CTkToplevel):
         self.texit3 = self.kentry3.get()
         #self.texit4 = int(self.kentry4.get())
         connection=create_connection()
-        # update_client(connection,self.texit,self.texit1,self.texit2,self.texit3)
+        update_service(connection,self.texit,self.texit1,self.texit2,self.texit3)
         self.destroy()
         self.master.switch_frame(StartPageAdmin_Servise)
 
@@ -349,20 +349,20 @@ class ToplevelWindow(CTkToplevel):
 
         self.title = CTkEntry(
             master=self,
-            placeholder_text='Identification number',
+            placeholder_text='Description',
             width=200,
             height=35,
         )
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Name',
+            placeholder_text='Price',
             width=200,
             height=35,
         )
         self.kentry2 = CTkEntry(
             master=self,
-            placeholder_text='Phone Number',
+            placeholder_text='Discount',
             width=200,
             height=35,
         )
@@ -396,7 +396,7 @@ class ToplevelWindow(CTkToplevel):
         self.texit2 = self.kentry2.get()
         # self.texit3 = self.kentry3.get()
         #self.texit4 = int(self.kentry4.get())
-        # connection=create_connection()
-        # insert_client(connection,self.texit,self.texit1,self.texit2)
+        connection=create_connection()
+        insert_service(connection,self.texit,self.texit1,self.texit2)
         self.destroy()
         self.master.switch_frame(StartPageAdmin_Servise)

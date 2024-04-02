@@ -56,7 +56,7 @@ def select_all_services(connection):
 def update_service(connection, ser_id, *new_values):
     try:
         cursor = connection.cursor()
-        query = "UPDATE service SET desco=%s, ser_price=%s, ser_discount=%s WHERE ser_id=%s"
+        query = "UPDATE service SET descp=%s, ser_price=%s, ser_discount=%s WHERE ser_id=%s"
         cursor.execute(query, (*new_values, ser_id))
         connection.commit()
         print("Service updated successfully")
