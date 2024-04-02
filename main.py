@@ -4,7 +4,7 @@ from date_li import *
 from PIL import Image
 from  CTkMessagebox import CTkMessagebox
 from StartPageAdmin_baj import StartPageAdmin
-
+import StartPageAdmin_baj
 set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 set_default_color_theme("dark-blue")
 # Themes: "blue" (standard), "green", "dark-blue"

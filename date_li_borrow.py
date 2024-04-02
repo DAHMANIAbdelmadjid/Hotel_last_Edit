@@ -44,16 +44,16 @@ def insert_reserv(connection,check_out, c_id, room_num):
         else:
             payment = dur * room_price
         cursor.execute("""
-UPDATE client
-SET faithful = CASE 
-                    WHEN EXISTS (SELECT 1 FROM reservation WHERE c_id = client.c_id) THEN
+                       UPDATE client
+                       SET faithful = CASE 
+                        WHEN EXISTS (SELECT 1 FROM reservation WHERE c_id = client.c_id) THEN
                         CASE 
                             WHEN (SELECT MAX(check_out) FROM reservation WHERE c_id = client.c_id) >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH) THEN 'Loyal'
                             ELSE 'Unloyal'
                         END
-                    ELSE 'Unloyal'
-                END;
-""")
+                        ELSE 'Unloyal'
+                        END;
+        """)
         cursor.execute(
             "INSERT INTO reservation (check_in, check_out, c_id, room_num, payment) VALUES (%s, %s, %s, %s, %s)",
             (check_in, check_out, c_id, room_num, payment))
