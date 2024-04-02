@@ -112,37 +112,39 @@ def search_reserv(connection, reserv):
     try:
         cursor = connection.cursor()
 
-        query = f"""
-            SELECT
-                reservation.res_id ,
-                reservation.check_in ,
-                reservation.check_out,
-                reservation.payment,
-                client.c_id,
-                client.c_name,
-                room.room_num
-            FROM
-                reservation 
-            JOIN
-                client  ON reservation.c_id = client.c_id
-            JOIN
-                room ON reservation.room_num = room.room_num;
-            WHERE
-                reservation.res_id = {reserv};
-        """
-        cursor.execute(query)
+        if reserv == "":
+            return None
+
+        query = """
+                SELECT
+                    reservation.res_id,
+                    reservation.check_in,
+                    reservation.check_out,
+                    reservation.payment,
+                    client.c_id,
+                    client.c_name,
+                    room.room_num
+                FROM
+                    reservation 
+                JOIN
+                    client ON reservation.c_id = client.c_id
+                JOIN
+                    room ON reservation.room_num = room.room_num
+                WHERE
+                    reservation.res_id = %s;
+            """
+        cursor.execute(query, (reserv,))
         search_results = cursor.fetchall()
 
-        borrow1 = [
-            ["User ID", "User", "Book ID", "Book", "CodeCatalogue", "DatePret", "DateRetourPrevu"],
+        reserv_list = [
+            ["Reservation ID", "Check-in", "Check-out", "Payment", "Client ID", "Client Name", "Room Number"]
         ]
 
-        if search_results:
-            for result in search_results:
-                borrow1.append(list(result))
-            return borrow1
-        else:
-            return None
+        for result in search_results:
+            reserv_list.append(list(result))
+
+        return reserv_list if reserv_list != [
+            ["Reservation ID", "Check-in", "Check-out", "Payment", "Client ID", "Client Name", "Room Number"]] else None
 
     except Error as e:
         print(f"Error: {e}")
