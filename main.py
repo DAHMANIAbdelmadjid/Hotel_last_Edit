@@ -77,7 +77,7 @@ class LoginPage(CTkFrame):
         cursor = connection.cursor()
         cursor.execute("SELECT admin_email, admin_psw FROM admin")
         admins = cursor.fetchall()
-        f = 0
+        f =   0
         for admin in admins:
             if username == admin[0] and password == admin[1]:
                 f = 1
