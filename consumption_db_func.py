@@ -86,16 +86,13 @@ def delete_consum(connection, cons_id):
         print(f"Error: {e}")
 
 def search_consum(connection, consum):
-    if consum == "":
-        return None
-
     try:
         cursor = connection.cursor()
 
-        query = f"""
+        query = """
             SELECT
-                consumption.cons_id ,
-                service.ser_id ,
+                consumption.cons_id,
+                service.ser_id,
                 service.descp,
                 consumption.cnt,
                 client.c_id,
@@ -103,25 +100,23 @@ def search_consum(connection, consum):
             FROM
                 consumption 
             JOIN
-                service  ON consumption.ser_id = service.ser_id
+                service ON consumption.ser_id = service.ser_id
             JOIN
-                client ON consumption.c_id = client.c_id;
+                client ON consumption.c_id = client.c_id
             WHERE
-                consumption.cons_id = {consum};
+                consumption.cons_id = %s;
         """
-        cursor.execute(query)
+        cursor.execute(query, (consum,))
         search_results = cursor.fetchall()
 
-        consum1 = [
-            ["Consumption ID", "Service ID", "Description", "Count", "Client ID", "Client name"],
+        consum_list = [
+            ["Consumption ID", "Service ID", "Description", "Count", "Client ID", "Client name"]
         ]
 
-        if search_results:
-            for result in search_results:
-                consum1.append(list(result))
-            return consum1
-        else:
-            return None
+        for result in search_results:
+            consum_list.append(list(result))
+
+        return consum_list if consum_list != [["Consumption ID", "Service ID", "Description", "Count", "Client ID", "Client name"]] else None
 
     except Error as e:
         print(f"Error: {e}")
