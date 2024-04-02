@@ -85,8 +85,8 @@ def delete_consum(connection, cons_id):
     except Error as e:
         print(f"Error: {e}")
 
-def search_consum(connection, reserv):
-    if reserv == "":
+def search_consum(connection, consum):
+    if consum == "":
         return None
 
     try:
@@ -94,37 +94,35 @@ def search_consum(connection, reserv):
 
         query = f"""
             SELECT
-                reservation.res_id ,
-                reservation.check_in ,
-                reservation.check_out,
-                reservation.payment,
+                consumption.cons_id ,
+                service.ser_id ,
+                service.descp,
+                consumption.cnt,
                 client.c_id,
-                client.c_name,
-                room.room_num
+                client.c_name
             FROM
-                reservation 
+                consumption 
             JOIN
-                client  ON reservation.c_id = client.c_id
+                service  ON consumption.ser_id = service.ser_id
             JOIN
-                room ON reservation.room_num = room.room_num;
+                client ON consumption.c_id = client.c_id;
             WHERE
-                reservation.res_id = {reserv};
+                consumption.cons_id = {consum};
         """
         cursor.execute(query)
         search_results = cursor.fetchall()
 
-        borrow1 = [
-            ["User ID", "User", "Book ID", "Book", "CodeCatalogue", "DatePret", "DateRetourPrevu"],
+        consum1 = [
+            ["Consumption ID", "Service ID", "Description", "Count", "Client ID", "Client name"],
         ]
 
         if search_results:
             for result in search_results:
-                borrow1.append(list(result))
-            return borrow1
+                consum1.append(list(result))
+            return consum1
         else:
             return None
 
     except Error as e:
         print(f"Error: {e}")
         return None
-
