@@ -8,7 +8,7 @@ from PIL import Image
 import StartPageAdmin_baj as sa
 import StartPageAdmin_invoice_baj as sai
 import StartPageAdmin_reservation_baj as sar
-import StartPageAdmin_Service_baj as sau
+import StartPageAdmin_use_baj as sau
 
 from  CTkMessagebox import CTkMessagebox
 
@@ -105,7 +105,7 @@ class StartPageAdmin_Servise(CTkFrame):
         self.master.switch_frame(sa.StartPageAdmin)
 
     def to_user(self):
-        self.master.switch_frame(sau.StartPageAdmin_Service)
+        self.master.switch_frame(sau.StartPageAdmin_use)
 
     def to_servise(self):
         self.master.switch_frame(StartPageAdmin_Servise)

@@ -44,7 +44,7 @@ def select_all_clients(connection):
         cursor.execute(query)
         clients = cursor.fetchall()
         close_connection(connection)
-        client1 = [["Client ID", "Identification number", "Client name", "Phone number"], ]
+        client1 = [["Client ID", "Identification number", "Client name", "Phone number","Faithful"], ]
         for client in clients:
             client1.append(list(client))
         return client1

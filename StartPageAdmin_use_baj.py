@@ -10,7 +10,8 @@ import StartPageAdmin_baj as sa
 import StartPageAdmin_invoice_baj as sai
 import StartPageAdmin_reservation_baj as sar
 import StartPageAdmin_Service_baj as sas
-
+import matplotlib.pyplot as plt
+from mysql.connector import Error
 class StartPageAdmin_use(CTkFrame):
     def __init__(self, master):
         self.master = master
@@ -69,6 +70,10 @@ class StartPageAdmin_use(CTkFrame):
                   command=self.open_toplevelDel).pack(anchor="ne", side="right", padx=12)
         CTkButton(master=self.title_frame, text="Update", font=("Arial Black", 15),
                   command=self.open_toplevelUp).pack(anchor="ne", side="right", padx=8)
+        self.search_container = CTkFrame(master=self.main_view, height=50)
+        self.search_container.pack(fill="x", pady=10, padx=27)
+        CTkButton(master=self.search_container, text="Statistics", font=("Arial Black", 15),
+                  command=self.Statistics).pack(anchor="ne", side="right", padx=8)
         self.search_container = CTkFrame(master=self.main_view, height=50)
         self.search_container.pack(fill="x", pady=(45, 0), padx=27)
         self.entry = CTkEntry(master=self.search_container, width=305, border_width=2, placeholder_text="Search for a user")
@@ -148,6 +153,42 @@ class StartPageAdmin_use(CTkFrame):
             self.toplevel_window = ToplevelSettings(self, self.master)
         else:
             self.toplevel_window.focus()
+    def Statistics(self):
+        connection=create_connection()
+        try:
+
+
+            query = """
+                SELECT room_num, COUNT(*) AS NumBookings
+                FROM reservation
+                WHERE check_in >= DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)
+                GROUP BY room_num
+                ORDER BY NumBookings DESC;
+            """
+
+            cursor = connection.cursor()
+            cursor.execute(query)
+            search_results = cursor.fetchall()
+
+            # Extract room numbers and number of bookings from search_results
+            room_numbers = [str(result[0]) for result in search_results]
+            num_bookings = [result[1] for result in search_results]
+
+            # Plotting the pie chart
+            plt.pie(num_bookings, labels=room_numbers, autopct='%1.1f%%', shadow=True)
+            plt.title('Room Booking Statistics')
+            plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+            # Display the pie chart
+            plt.show()
+
+        except Error as e:
+            print(f"Error: {e}")
+
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
 
 class ToplevelSettings(CTkToplevel):

@@ -90,7 +90,6 @@ def search_consum(connection, consum):
         return None
 
     try:
-        cursor = connection.cursor()
 
         query = f"""
             SELECT
@@ -109,6 +108,7 @@ def search_consum(connection, consum):
             WHERE
                 consumption.cons_id = {consum};
         """
+        cursor = connection.cursor()
         cursor.execute(query)
         search_results = cursor.fetchall()
 
