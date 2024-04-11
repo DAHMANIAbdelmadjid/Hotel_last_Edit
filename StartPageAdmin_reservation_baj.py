@@ -131,15 +131,15 @@ class StartPageAdmin_reservation(CTkFrame):
             self.toplevel_window.focus()
     def to_search(self):
          pass
-    #    connection=create_connection()
-    #    self.tab=self.entry.get()
-    #    self.args=search_reserv(connection,self.tab)
-    #     self.args2=select_all_reserv(connection)
-    #     index=[]
-    #    for value in  self.args2:
-    #         if not value in  self.args:
-    #             index.append( self.args2.index(value))
-    #    self.table.delete_rows(index)
+         connection=create_connection()
+         self.tab=self.entry.get()
+         self.args=search_reserv(connection,self.tab)
+         self.args2=select_all_reserv(connection)
+         index=[]
+         for value in  self.args2:
+             if not value in  self.args:
+                 index.append( self.args2.index(value))
+         self.table.delete_rows(index)
     def open_toplevelSett(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
             self.toplevel_window = ToplevelSettings(self, self.master)
@@ -197,7 +197,7 @@ class ToplevelWindow_(CTkToplevel):
         self.title = CTkEntry(
             master=self,
 
-            placeholder_text='Check out',
+            placeholder_text='Duration',
             width= 200,
             height=35,
         )
@@ -337,7 +337,7 @@ class ToplevelWindowUp_(CTkToplevel,):
         self.kentry1 = CTkEntry(
             master=self,
 
-            placeholder_text='Check out',
+            placeholder_text='Duration',
             width= 200,
             height=35,
         )
